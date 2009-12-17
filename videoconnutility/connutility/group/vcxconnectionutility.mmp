@@ -1,0 +1,60 @@
+/*
+* Copyright (c) 2004-2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    This is a project specification file for Video Center Conn Utility*
+*/
+
+
+
+
+#include <platform_paths.hrh>
+#include <data_caging_paths.hrh>
+
+
+TARGET          vcxconnectionutility.dll
+TARGETTYPE      dll
+UID             0x1000008d 0x20016BA1
+
+#if defined (SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY) && defined (ARMCC)
+   DEFFILE vcxconnectionutility_tb92.def
+#else
+   DEFFILE vcxconnectionutility.def
+#endif
+
+
+CAPABILITY      CAP_GENERAL_DLL
+
+SOURCEPATH      ../src
+
+SOURCE          vcxconnutilengine.cpp 
+SOURCE          vcxconnutilpubsub.cpp
+SOURCE          vcxconnutilimpl.cpp 
+SOURCE          vcxconnectionutility.cpp 
+SOURCE          vcxconnutilsubscriber.cpp 
+SOURCE          vcxconnutilwaitsch.cpp 
+
+USERINCLUDE     . 
+USERINCLUDE     ../inc
+USERINCLUDE     ../../inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY         commdb.lib
+LIBRARY         commsdat.lib
+LIBRARY         euser.lib       
+LIBRARY         cmmanager.lib
+LIBRARY         esock.lib
+LIBRARY         connmon.lib
+LIBRARY	        netmeta.lib
+LIBRARY         flogger.lib
+LIBRARY         extendedconnpref.lib

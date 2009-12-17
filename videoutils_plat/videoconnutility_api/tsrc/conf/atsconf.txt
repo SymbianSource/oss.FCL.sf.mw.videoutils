@@ -1,0 +1,14 @@
+;Run \vado\videoplayer\tsrc\testing\tools\genATSdrop.pl from 
+;the tsrc folder to create ATS3 drop.
+[DROP]
+NAME VaDo - videoutils_plat - videoconnutility_api
+DEVICE INSERT_DEVICE
+FLASH INSERT_FLASH_IMAGE
+FLASH INSERT_FLASH_IMAGE
+FLASH INSERT_FLASH_IMAGE
+;SIS \VideoApp_Domain\videoplayer\videoplayerapp\mpxvideoplayer\sis\VideoPlayer.sisx
+PKG group\videoconnutility_apitest.pkg
+INI init\TestFramework.ini 200
+EMAIL INSERT_EMAIL
+RUN
+[ENDDROP]

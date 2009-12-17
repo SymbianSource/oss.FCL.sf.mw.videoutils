@@ -1,0 +1,38 @@
+EXPORTS
+	??0CCseScheduledProgram@@IAE@XZ @ 1 NONAME ; CCseScheduledProgram::CCseScheduledProgram(void)
+	??1CCseScheduledProgram@@UAE@XZ @ 2 NONAME ; CCseScheduledProgram::~CCseScheduledProgram(void)
+	??1CCseSchedulerApi@@UAE@XZ @ 3 NONAME ; CCseSchedulerApi::~CCseSchedulerApi(void)
+	?AddSchedule@CCseSchedulerApi@@QBEHAAVCCseScheduledProgram@@@Z @ 4 NONAME ; int CCseSchedulerApi::AddSchedule(class CCseScheduledProgram &) const
+	?AppUid@CCseScheduledProgram@@QBEJXZ @ 5 NONAME ; long CCseScheduledProgram::AppUid(void) const
+	?ApplicationData@CCseScheduledProgram@@QAE?AVTPtrC8@@XZ @ 6 NONAME ; class TPtrC8 CCseScheduledProgram::ApplicationData(void)
+	?DbIdentifier@CCseScheduledProgram@@QBEKXZ @ 7 NONAME ; unsigned long CCseScheduledProgram::DbIdentifier(void) const
+	?DebugDump@CCseScheduledProgram@@QBEXXZ @ 8 NONAME ; void CCseScheduledProgram::DebugDump(void) const
+	?EndTime@CCseScheduledProgram@@QAEAAVTTime@@XZ @ 9 NONAME ; class TTime & CCseScheduledProgram::EndTime(void)
+	?ExternalizeL@CCseScheduledProgram@@QAEXAAVRWriteStream@@@Z @ 10 NONAME ; void CCseScheduledProgram::ExternalizeL(class RWriteStream &)
+	?ExternalizeLength@CCseScheduledProgram@@QAEHXZ @ 11 NONAME ; int CCseScheduledProgram::ExternalizeLength(void)
+	?GetOverlappingSchedules@CCseSchedulerApi@@QAEHAAVCCseScheduledProgram@@AAV?$RPointerArray@VCCseScheduledProgram@@@@@Z @ 12 NONAME ; int CCseSchedulerApi::GetOverlappingSchedules(class CCseScheduledProgram &, class RPointerArray<class CCseScheduledProgram> &)
+	?GetSchedule@CCseSchedulerApi@@QBEHKPAVCCseScheduledProgram@@@Z @ 13 NONAME ; int CCseSchedulerApi::GetSchedule(unsigned long, class CCseScheduledProgram *) const
+	?GetSchedulesByAppUid@CCseSchedulerApi@@QBEHJAAV?$RPointerArray@VCCseScheduledProgram@@@@@Z @ 14 NONAME ; int CCseSchedulerApi::GetSchedulesByAppUid(long, class RPointerArray<class CCseScheduledProgram> &) const
+	?GetSchedulesByPluginUid@CCseSchedulerApi@@QBEHJAAV?$RPointerArray@VCCseScheduledProgram@@@@@Z @ 15 NONAME ; int CCseSchedulerApi::GetSchedulesByPluginUid(long, class RPointerArray<class CCseScheduledProgram> &) const
+	?GetSchedulesByTime@CCseSchedulerApi@@QBEHABVTTime@@0AAV?$RPointerArray@VCCseScheduledProgram@@@@@Z @ 16 NONAME ; int CCseSchedulerApi::GetSchedulesByTime(class TTime const &, class TTime const &, class RPointerArray<class CCseScheduledProgram> &) const
+	?GetSchedulesByType@CCseSchedulerApi@@QBEHJAAV?$RPointerArray@VCCseScheduledProgram@@@@@Z @ 17 NONAME ; int CCseSchedulerApi::GetSchedulesByType(long, class RPointerArray<class CCseScheduledProgram> &) const
+	?InternalizeL@CCseScheduledProgram@@QAEXAAVRReadStream@@@Z @ 18 NONAME ; void CCseScheduledProgram::InternalizeL(class RReadStream &)
+	?Name@CCseScheduledProgram@@QBE?AVTPtrC8@@XZ @ 19 NONAME ; class TPtrC8 CCseScheduledProgram::Name(void) const
+	?NewL@CCseScheduledProgram@@SAPAV1@AAV1@@Z @ 20 NONAME ; class CCseScheduledProgram * CCseScheduledProgram::NewL(class CCseScheduledProgram &)
+	?NewL@CCseScheduledProgram@@SAPAV1@XZ @ 21 NONAME ; class CCseScheduledProgram * CCseScheduledProgram::NewL(void)
+	?NewL@CCseSchedulerApi@@SAPAV1@XZ @ 22 NONAME ; class CCseSchedulerApi * CCseSchedulerApi::NewL(void)
+	?PluginType@CCseScheduledProgram@@QBEJXZ @ 23 NONAME ; long CCseScheduledProgram::PluginType(void) const
+	?PluginUid@CCseScheduledProgram@@QBEJXZ @ 24 NONAME ; long CCseScheduledProgram::PluginUid(void) const
+	?RemoveSchedule@CCseSchedulerApi@@QBEHK@Z @ 25 NONAME ; int CCseSchedulerApi::RemoveSchedule(unsigned long) const
+	?ScheduleType@CCseScheduledProgram@@QBEJXZ @ 26 NONAME ; long CCseScheduledProgram::ScheduleType(void) const
+	?SetAppUid@CCseScheduledProgram@@QAEXJ@Z @ 27 NONAME ; void CCseScheduledProgram::SetAppUid(long)
+	?SetApplicationDataL@CCseScheduledProgram@@QAEXABVTDesC8@@@Z @ 28 NONAME ; void CCseScheduledProgram::SetApplicationDataL(class TDesC8 const &)
+	?SetDbIdentifier@CCseScheduledProgram@@QAEXK@Z @ 29 NONAME ; void CCseScheduledProgram::SetDbIdentifier(unsigned long)
+	?SetEndTime@CCseScheduledProgram@@QAEXABVTTime@@@Z @ 30 NONAME ; void CCseScheduledProgram::SetEndTime(class TTime const &)
+	?SetName@CCseScheduledProgram@@QAEXABVTDesC8@@@Z @ 31 NONAME ; void CCseScheduledProgram::SetName(class TDesC8 const &)
+	?SetPluginType@CCseScheduledProgram@@QAEXJ@Z @ 32 NONAME ; void CCseScheduledProgram::SetPluginType(long)
+	?SetPluginUid@CCseScheduledProgram@@QAEXJ@Z @ 33 NONAME ; void CCseScheduledProgram::SetPluginUid(long)
+	?SetScheduleType@CCseScheduledProgram@@QAEXJ@Z @ 34 NONAME ; void CCseScheduledProgram::SetScheduleType(long)
+	?SetStartTime@CCseScheduledProgram@@QAEXABVTTime@@@Z @ 35 NONAME ; void CCseScheduledProgram::SetStartTime(class TTime const &)
+	?StartTime@CCseScheduledProgram@@QAEAAVTTime@@XZ @ 36 NONAME ; class TTime & CCseScheduledProgram::StartTime(void)
+

@@ -1,0 +1,55 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    This is a project specification file for Common Scheduling Engine / client*
+*/
+
+
+
+
+#include <platform_paths.hrh>
+#include <bldvariant.hrh>
+
+//OPTION ARMCC --asm --interleave
+ALWAYS_BUILD_AS_ARM
+
+TARGET              CseSchedulerClient.dll
+TARGETTYPE          dll
+UID                 0x1000008d 0x10281F1F 
+
+CAPABILITY          CAP_ECOM_PLUGIN DRM
+
+// ECom Dll recognition UID followed by the unique UID for this dll
+
+SOURCEPATH          ../src
+SOURCE              CCseSchedulerAPI.cpp
+SOURCE              RCseSchedulerClient.cpp
+SOURCE              RCseSchedulerService.cpp
+SOURCE              RCseSchedulerServiceBase.cpp
+SOURCE              CCseScheduledProgram.cpp
+
+
+USERINCLUDE         ../inc
+USERINCLUDE         ../../inc
+
+MW_LAYER_SYSTEMINCLUDE
+ 
+SOURCEPATH          ../data
+
+LIBRARY             euser.lib
+LIBRARY             efsrv.lib
+LIBRARY             bafl.lib
+LIBRARY             flogger.lib
+LIBRARY             estor.lib
+
+LANGUAGE_IDS 

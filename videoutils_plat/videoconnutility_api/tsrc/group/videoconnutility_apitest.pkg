@@ -1,0 +1,72 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of the License "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description:  Package file for video connection utility API STIF tests;
+
+; Languages
+&EN
+
+; Provide value for uid
+#{"VCXConnUtilTest"},(0x00000000),1,1,0,TYPE=SA
+
+; Series60 product id for S60 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID"}
+
+; Localised Vendor name
+%{"Nokia"}
+
+; Unique Vendor name
+:"Nokia"
+
+; Logo
+; None
+
+; Package signature - Optional
+; None
+
+; Start of Package body
+
+; Condition blocks
+; None
+
+; Options list
+; None
+
+; Install files
+"/epoc32/release/armv5/udeb/VCXConnUtilTest.dll"               -  "!:/Sys/Bin/VCXConnUtilTest.dll"
+"/epoc32/release/armv5/udeb/VCXConnUtilTestExe.exe"            -  "!:/Sys/Bin/VCXConnUtilTestExe.exe"
+"/epoc32/release/armv5/udeb/VCXTestUtilModule.dll"             -  "!:/Sys/Bin/VCXTestUtilModule.dll"
+"/epoc32/release/armv5/udeb/VCXTestCommon.dll"                 -  "!:/Sys/Bin/VCXTestCommon.dll"
+"../conf/VCXConnUtilTestMasterAndSlave.cfg"                    -  "C:/TestFramework/VCXConnUtilTestMasterAndSlave.cfg"
+"../conf/VCXConnUtilTestSNAP.cfg"                              -  "C:/TestFramework/VCXConnUtilTestSNAP.cfg"
+"../conf/VCXConnUtilTestHelium.cfg"                            -  "C:/TestFramework/VCXConnUtilTestHelium.cfg"
+"../conf/VCXConnUtilTestStates.cfg"                            -  "C:/TestFramework/VCXConnUtilTestStates.cfg"
+"../conf/VCXConnUtilTest.inc"                                  -  "C:/TestFramework/VCXConnUtilTest.inc"
+"../conf/VCXConsts.inc"                                        -  "C:/TestFramework/VCXConsts.inc"
+"../conf/VCXDrives.inc"                                        -  "C:/TestFramework/VCXDrives.inc"
+"../conf/VCXErrors.inc"                                        -  "C:/TestFramework/VCXErrors.inc"
+
+; The cenrep and testframework.ini files won't install with sis, only for ATS test runs.
+"../init/TestFramework.ini"                                    -  "C:/TestFramework/TestFramework.ini"
+; If tests are run in XXXXX CATS uncomment the cenrep file installation line.
+; "../data/cccccc00.cre"                                         -   "c:\private\10202be9\persists\cccccc00.cre"
+; Embedded SIS
+; None
+
+; End of Package body
+
+; PKG dependencies
+; None
+
+; PKG capabilities
+; None
