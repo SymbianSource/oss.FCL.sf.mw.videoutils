@@ -887,6 +887,31 @@ EXPORT_C void CIptvTestUtilALR::TerminateDestinationConnectionsL( TDesC& aDestin
     }
 
 // ---------------------------------------------------------------------------
+// CIptvTestUtilALR::GetDefaultIap
+// ---------------------------------------------------------------------------
+//
+EXPORT_C TUint32 CIptvTestUtilALR::GetDefaultIap()
+    {
+    VCXLOGLO1(">>>CIptvTestUtilALR::GetDefaultIap");
+    RSocketServ ss;
+    ss.Connect();
+    
+    RConnection conn;
+    conn.Open( ss );
+
+    TCommDbConnPref prefs;
+    prefs.SetDialogPreference( ECommDbDialogPrefDoNotPrompt );
+
+    conn.Start( prefs );
+    TUint32 iap( 0 );
+    conn.GetIntSetting( _L("IAP\\Id"), iap );
+    conn.Close();
+
+    VCXLOGLO2("<<<CIptvTestUtilALR::GetDefaultIap return %D", iap);
+    return iap;
+    }
+
+// ---------------------------------------------------------------------------
 // CIptvTestUtilALR::PrintDestinationL
 // ---------------------------------------------------------------------------
 //

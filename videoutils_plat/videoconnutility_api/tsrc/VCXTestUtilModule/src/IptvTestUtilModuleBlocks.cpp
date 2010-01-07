@@ -18,6 +18,7 @@
 
 // INCLUDE FILES
 #include <e32svr.h>
+#include <f32fsys.h>
 #include <StifParser.h>
 #include <Stiftestinterface.h>
 
@@ -1619,6 +1620,7 @@ TInt CIptvTestUtilModule::SetConnectionMethodBoolAttributeL( CStifItemParser& aI
     VCXLOGLO1("<<<CIptvTestUtilModule::SetConnectionMethodBoolAttributeL");
     return ret;
     }
+
 // -----------------------------------------------------------------------------
 // CIptvTestUtilModule::CreateFileL
 // -----------------------------------------------------------------------------

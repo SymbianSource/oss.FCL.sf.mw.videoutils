@@ -13,3 +13,4 @@ WLAN_AP2          "Wlan2"
 EMULATOR_AP       "Ethernet with Daemon Dynamic IP"
 BAD_AP            "BadIap" // CIptvTestUtilities::GetIapIdL returns AP that does not work
 INVALID_AP        "invalidiap" // CIptvTestUtilities::GetIapIdL returns invalid AP ID
+DEFAULT_AP        "default" // used via CIptvTestUtilALR::GetDefaultIap

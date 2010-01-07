@@ -59,7 +59,7 @@
 ; The cenrep and testframework.ini files won't install with sis, only for ATS test runs.
 "../init/TestFramework.ini"                                    -  "C:/TestFramework/TestFramework.ini"
 ; If tests are run in XXXXX CATS uncomment the cenrep file installation line.
-; "../data/cccccc00.cre"                                         -   "c:\private\10202be9\persists\cccccc00.cre"
+"../data/cccccc00.cre"                                         -  "c:/private/10202be9/persists/cccccc00.cre"
 ; Embedded SIS
 ; None
 

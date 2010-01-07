@@ -536,7 +536,7 @@ EXPORT_C TInt CIptvTestVerifyData::VerifyDataL(TDesC& aVerifyId, TVerifyResult& 
 		totalLength += lineFromInst.Length();
 
 		// Don't compare if line is for path because it can have service id which varies
-		if( KErrNotFound != lineFromTest.Match(_L("*\\Data\\videocenter\\*")) && KErrNotFound != lineFromTest.Match(_L("*\\Data\\videocenter\\*")) )
+		if( KErrNotFound != lineFromTest.Match(_L("*\\Data\\videocenter\\*")) && KErrNotFound != lineFromTest.Match(_L("*\\data\\videocenter\\*")) )
 			{
 			TInt res = lineFromInst.Compare(lineFromTest);
 			if(res < 0)

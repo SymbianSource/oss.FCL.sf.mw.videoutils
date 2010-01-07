@@ -26,6 +26,7 @@
 #include <cmdestinationext.h>
 #include <cmconnectionmethodext.h>
 #include <cmconnectionmethoddef.h>
+#include <commdbconnpref.h>
 
 // FORWARD DECLARATIONS;
 class CIptvTestActiveWait;
@@ -130,6 +131,11 @@ public: // New functions
     * Terminates active connections for the destination's IAPs.
     */
     IMPORT_C void TerminateDestinationConnectionsL( TDesC& aDestinationName );
+    
+    /**
+     * Gets the default access point from connection manager
+     */
+    IMPORT_C TUint32 GetDefaultIap( void );
 
 private: // New functions
 

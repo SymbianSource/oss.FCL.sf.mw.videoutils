@@ -8,6 +8,7 @@ FLASH INSERT_FLASH_IMAGE
 FLASH INSERT_FLASH_IMAGE
 ;SIS \VideoApp_Domain\videoplayer\videoplayerapp\mpxvideoplayer\sis\VideoPlayer.sisx
 PKG group\videoconnutility_apitest.pkg
+BOOT
 INI init\TestFramework.ini 200
 EMAIL INSERT_EMAIL
 RUN
