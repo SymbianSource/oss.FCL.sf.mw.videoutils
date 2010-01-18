@@ -838,25 +838,24 @@ void CCRRtspPacketSource::ProcessRtspResponseL( const TDesC8& aData )
                         {
                         iResponses[iStage]->SessionId( iSessionId );
                         }
-                    // If we see that we don't need to send further setups,
-                    // do send punch packets now.
-                    if ( iSdpParser &&                        // if we have sdp parser
-                       ( iSdpParser->VideoControlAddr().Length() &&  // and it shows we have video
-                         iResponses[ERTSPSetupVideoSent] &&   // and we have video se tup
-                         iSdpParser->AudioControlAddr().Length() &&  // and it shows we have audio
-                         iResponses[ERTSPSetupAudioSent] ) || // and we have audio set up
-                       ( !iSdpParser->VideoControlAddr().Length() && // or it shows we have no video
-                         !iResponses[ERTSPSetupVideoSent] && // and we've video not set up
-                         iSdpParser->AudioControlAddr().Length() &&  // and it shows we have audio
-                         iResponses[ERTSPSetupAudioSent] ) || // and we've audio set up
-                       ( iSdpParser->VideoControlAddr().Length() &&  // or it shows we've video
-                         iResponses[ERTSPSetupVideoSent] &&   // and we have video set up
-                         !iSdpParser->AudioControlAddr().Length() &&  // and we have no audio
-                         !iResponses[ERTSPSetupAudioSent] ) )// and we have no audio set up
+                    // Check for sdp parser and send punch packets for UDP transport
+                    // (TCP or multicast: session setup and PLAY in SendRTSPCommand)
+                    if ( iSdpParser && iTransport == ERTPOverUDP )
                         {
-                        // Only send punch packets for UDP transport
-                        // TCP or multicast: session setup and PLAY in SendRTSPCommand
-                        if ( iTransport == ERTPOverUDP )
+                        // If we see that we don't need to send further setups,
+                        // do send punch packets now.
+                        if ( ( iSdpParser->VideoControlAddr().Length() && // if we have video
+                             iResponses[ERTSPSetupVideoSent] &&   // and we have video se tup
+                             iSdpParser->AudioControlAddr().Length() &&   // and we have audio
+                             iResponses[ERTSPSetupAudioSent] ) || // and we have audio set up or...
+                           ( !iSdpParser->VideoControlAddr().Length() &&  // if we have no video
+                             !iResponses[ERTSPSetupVideoSent] &&  // and we've video not set up
+                             iSdpParser->AudioControlAddr().Length() &&   // and it shows we have audio
+                             iResponses[ERTSPSetupAudioSent] ) || // and we've audio set up or...
+                           ( iSdpParser->VideoControlAddr().Length() &&   // if we have video
+                             iResponses[ERTSPSetupVideoSent] &&   // and we have video set up
+                             !iSdpParser->AudioControlAddr().Length() &&  // and we have no audio
+                             !iResponses[ERTSPSetupAudioSent] ) ) // and we have no audio set up
                             {
                             SendPunchPacketsL();
                             }

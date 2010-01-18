@@ -248,6 +248,27 @@ enum TVcxMyVideosEventInfo
 //KMPXMediaVideoBitRate
 
 /**
+ *  10.2 (FULL)
+ *  TUint16, Y-axis
+ *  Saved to MDS.
+ */
+//KMPXMediaVideoWidth
+
+/**
+ *  10.3 (FULL)
+ *  TUint16, X-axis
+ *  Saved to MDS.
+ */
+//KMPXMediaVideoHeight
+
+/**
+ *  10.4 (FULL)
+ *  Descriptor, artist name.
+ *  Saved to MDS.
+ */
+//KMPXMediaVideoArtist
+
+/**
 *  11. (BRIEF)
 *  TInt64, size in bytes. 
 *  Saved to MDS.
