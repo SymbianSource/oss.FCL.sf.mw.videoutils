@@ -175,6 +175,7 @@ TInt CIptvTestUtilModule::RunMethodL(
 		ENTRY( "CheckMobilecrashes", CIptvTestUtilModule::CheckMobilecrashesL ),
 		ENTRY( "CheckMobilecrashesZeroTolerance", CIptvTestUtilModule::CheckMobilecrashesZeroToleranceL ),
 
+		ENTRY( "SetDefaultIapCenrep", CIptvTestUtilModule::SetDefaultIapCenRepL ), 
 		ENTRY( "DeleteUsedDestinationCenRep", CIptvTestUtilModule::DeleteUsedDestinationCenRepL ),
 		ENTRY( "SetUsedDestination", CIptvTestUtilModule::SetUsedDestinationL ),
 		ENTRY( "CreateDestination", CIptvTestUtilModule::CreateDestinationL ),
@@ -1253,6 +1254,36 @@ TInt CIptvTestUtilModule::DeleteUsedDestinationCenRepL(CStifItemParser& aItem )
 	VCXLOGLO2("<<<CIptvTestUtilModule:: returning: %d", ret);
 	VCXLOGLO1("<<<CIptvTestUtilModule::DeleteUsedDestinationCenRepL");
 	return ret;
+    }
+
+// -----------------------------------------------------------------------------
+// CIptvTestUtilModule::SetDefaultIapCenRep
+// -----------------------------------------------------------------------------
+//
+TInt CIptvTestUtilModule::SetDefaultIapCenRepL(CStifItemParser& aItem )
+    {
+    VCXLOGLO1(">>>CIptvTestUtilModule::SetDefaultIapCenRep");
+    // Print to UI
+    _LIT( KIptvTestUtilConnect, "IptvTestUtilModule" );
+    _LIT( KWhere, "In SetDefaultIapCenRep" );
+    TestModuleIf().Printf( 0, KIptvTestUtilConnect, KWhere );
+    // Print to log file
+    iLog->Log( KWhere );
+
+    TInt ret( KErrNone );
+
+    if( !iTestUtilALR )
+        {
+        iTestUtilALR = CIptvTestUtilALR::NewL();
+        }
+
+    aItem.SetParsingType(CStifItemParser::EQuoteStyleParsing);
+
+    TRAP( ret, iTestUtilALR->SetDefaultIapCenRep() );
+
+    VCXLOGLO2("<<<CIptvTestUtilModule:: returning: %d", ret);
+    VCXLOGLO1("<<<CIptvTestUtilModule::SetDefaultIapCenRep");
+    return ret;
     }
 
 // -----------------------------------------------------------------------------

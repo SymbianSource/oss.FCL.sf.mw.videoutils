@@ -293,7 +293,11 @@ NONSHARABLE_CLASS(CIptvTestUtilModule) : public CScriptBase, public MTestUtilCon
         */
 		virtual TInt SetTimeZone(CStifItemParser& aItem );
 
-
+        /**
+        * Sets the default iap id value to cenrep.
+        */
+		virtual TInt SetDefaultIapCenRepL(CStifItemParser& aItem );
+		
         /**
         * Removes the used destination cenrep value.
         */

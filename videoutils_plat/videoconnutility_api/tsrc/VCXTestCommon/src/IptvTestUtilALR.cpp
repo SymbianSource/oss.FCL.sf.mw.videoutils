@@ -912,6 +912,51 @@ EXPORT_C TUint32 CIptvTestUtilALR::GetDefaultIap()
     }
 
 // ---------------------------------------------------------------------------
+// CIptvTestUtilALR::SetDefaultIapCenRep
+// ---------------------------------------------------------------------------
+//
+EXPORT_C TInt CIptvTestUtilALR::SetDefaultIapCenRep()
+    {
+    TUint32 iap( 0 );
+    iap = GetDefaultIap();
+    TInt err( 0 );
+    
+    if( iap != 0 )
+        {
+        VCXLOGLO1("CIptvTestUtilALR::SetDefaultIapCenRep Create cenrep.");
+        CRepository* cenRep = CRepository::NewLC( VCXTEST_KIptvAlrCenRepUid );
+        VCXLOGLO1("CIptvTestUtilALR::SetDefaultIapCenRep Set cenrep.");
+        User::LeaveIfError( cenRep->Set( VCXTEST_KIptvCenRepDefaultIapIdKey, (TInt)iap ) );
+        CleanupStack::PopAndDestroy( cenRep );
+        }
+    else
+        {
+        err = KErrNotFound;
+        }
+    
+    return err;   
+    }
+
+// ---------------------------------------------------------------------------
+// CIptvTestUtilALR::GetDefaultIap
+// ---------------------------------------------------------------------------
+//
+EXPORT_C TUint32 CIptvTestUtilALR::GetDefaultIapCenRep()
+    {
+    TInt iap( 0 );
+    
+    VCXLOGLO1("CIptvTestUtilALR::GetDefaultIapCenRep Create cenrep.");
+    CRepository* cenRep = CRepository::NewLC( VCXTEST_KIptvAlrCenRepUid );
+    VCXLOGLO1("CIptvTestUtilALR::GetDefaultIapCenRep Set cenrep.");
+    User::LeaveIfError( cenRep->Get( VCXTEST_KIptvCenRepDefaultIapIdKey, iap) );
+    CleanupStack::PopAndDestroy( cenRep );
+    
+    TUint32 iapId( iap );
+    
+    return iapId;
+    }
+
+// ---------------------------------------------------------------------------
 // CIptvTestUtilALR::PrintDestinationL
 // ---------------------------------------------------------------------------
 //

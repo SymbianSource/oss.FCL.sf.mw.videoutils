@@ -145,4 +145,7 @@ EXPORTS
 	?WriteVerifyData@CVCXTestCommon@@QAEHAAVTDesC16@@0@Z @ 144 NONAME ; int CVCXTestCommon::WriteVerifyData(class TDesC16 &, class TDesC16 &)
 	?WriteVerifyDataL@CIptvTestVerifyData@@QAEHAAVTDesC16@@0@Z @ 145 NONAME ; int CIptvTestVerifyData::WriteVerifyDataL(class TDesC16 &, class TDesC16 &)
 	?ListFilesProcessesAndThreadsL@CVCXTestCommon@@SAXAAVRFs@@@Z @ 146 NONAME ; void CVCXTestCommon::ListFilesProcessesAndThreadsL(class RFs &)
+	?GetDefaultIap@CIptvTestUtilALR@@QAEKXZ @ 147 NONAME ; unsigned long CIptvTestUtilALR::GetDefaultIap(void)
+	?SetDefaultIapCenRep@CIptvTestUtilALR@@QAEHXZ @ 148 NONAME ; int CIptvTestUtilALR::SetDefaultIapCenRep(void)
+	?GetDefaultIapCenRep@CIptvTestUtilALR@@QAEKXZ @ 149 NONAME ; unsigned long CIptvTestUtilALR::GetDefaultIapCenRep(void)
 

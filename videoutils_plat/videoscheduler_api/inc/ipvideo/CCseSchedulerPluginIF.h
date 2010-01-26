@@ -75,6 +75,6 @@ protected:
 
 
 #include <ecom/ecom.h>
-#include <ipvideo/CCseSchedulerPluginIF.inl>
+#include <ipvideo/ccseschedulerpluginif.inl>
 
 #endif //CCSESCHEDULERPLUGINIF_H

@@ -23,7 +23,7 @@
 //OPTION ARMCC --asm --interleave
 ALWAYS_BUILD_AS_ARM
 
-TARGET              CseSchedulerClient.dll
+TARGET              cseschedulerclient.dll
 TARGETTYPE          dll
 UID                 0x1000008d 0x10281F1F 
 

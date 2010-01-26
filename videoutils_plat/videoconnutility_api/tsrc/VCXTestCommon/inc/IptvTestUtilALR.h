@@ -36,6 +36,7 @@ class CIptvTestActiveWait;
 // Declared in CIptvUtil.h and vcxconnutilimpl.cpp
 const TUid VCXTEST_KIptvAlrCenRepUid = { 0x2000B438 };
 const TInt VCXTEST_KIptvCenRepUsedSnapIdKey   = 0x1;
+const TInt VCXTEST_KIptvCenRepDefaultIapIdKey   = 0x2;
 const TInt VCXTEST_KIptvCenRepAPModeAlwaysAsk = 0;
 
 // CLASS DECLARATION
@@ -136,7 +137,18 @@ public: // New functions
      * Gets the default access point from connection manager
      */
     IMPORT_C TUint32 GetDefaultIap( void );
+    
+    /**
+     * Gets the default iap, saves it to cenrep
+     */
+    IMPORT_C TInt SetDefaultIapCenRep( void );
+    
+    /**
+     * Gets the default iap id from cenrep
+     */
+    IMPORT_C TUint32 GetDefaultIapCenRep( void );
 
+    
 private: // New functions
 
     /**

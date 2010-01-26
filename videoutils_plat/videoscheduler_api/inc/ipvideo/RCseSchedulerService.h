@@ -20,7 +20,7 @@
 #define __RCSESCHEDULERSERVICE_H__
 
 // INCLUDES
-#include <ipvideo/RCseSchedulerServiceBase.h>   // Client common methods (open, close etc)
+#include <ipvideo/rcseschedulerservicebase.h>   // Client common methods (open, close etc)
 
 // CONSTANTS
 // None.

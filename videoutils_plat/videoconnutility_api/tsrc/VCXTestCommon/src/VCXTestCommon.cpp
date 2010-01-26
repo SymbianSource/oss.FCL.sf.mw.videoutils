@@ -24,6 +24,7 @@
 #include <mmf/common/mmfcontrollerpluginresolver.h>
 
 #include "VCXTestCommon.h"
+#include "IptvTestUtilALR.h"
 #include "CIptvTestVerifyData.h"
 #include "TestUtilConnectionWaiter.h"
 #include "VCXTestLog.h"
@@ -169,7 +170,33 @@ EXPORT_C TBool CVCXTestCommon::GetIapIdL(const TDesC& aIapName, TUint32& aIapId)
         return found;
         }
 #endif
-
+    
+    if( aIapName == _L("default") )
+        {
+        VCXLOGLO1("CVCXTestCommon::GetIapIdL -- Searching default iap from cenrep");
+        CIptvTestUtilALR* util = CIptvTestUtilALR::NewLC();
+        aIapId = util->GetDefaultIapCenRep();
+        CleanupStack::PopAndDestroy( util );
+        if( aIapId != 0 )
+            {
+            VCXLOGLO2("CVCXTestCommon::GetIapIdL -- Got default from cenrep: %d", aIapId);
+            return ETrue;
+            }
+        }
+    
+    if( aIapName == _L("default") )
+        {
+        VCXLOGLO1("CVCXTestCommon::GetIapIdL -- Getting default iap via ALR util");
+        CIptvTestUtilALR* util = CIptvTestUtilALR::NewLC();
+        aIapId = util->GetDefaultIap();
+        CleanupStack::PopAndDestroy( util );
+        if( aIapId != 0 )
+            {
+            VCXLOGLO2("CVCXTestCommon::GetIapIdL -- Got default: %d", aIapId);
+            return ETrue;
+            }
+        }
+    
     VCXLOGLO2("CVCXTestCommon:: Searching IAP: %S", &aIapName);
 
     found = GetIapIdByNameL(aIapName, aIapId);

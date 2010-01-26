@@ -22,13 +22,13 @@ PRJ_PLATFORMS
 DEFAULT
 
 PRJ_TESTEXPORTS
-../conf/VCXConnUtilTestMasterAndSlave.cfg  /epoc32/winscw/c/testframework/VCXConnUtilTestMasterAndSlave.cfg
-../conf/VCXConnUtilTestSNAP.cfg            /epoc32/winscw/c/testframework/VCXConnUtilTestSNAP.cfg
-../conf/VCXConnUtilTestStates.cfg          /epoc32/winscw/c/testframework/VCXConnUtilTestStates.cfg
-../conf/VCXConnUtilTest.inc                /epoc32/winscw/c/testframework/VCXConnUtilTest.inc
-../conf/VCXConsts.inc                      /epoc32/winscw/c/testframework/VCXConsts.inc
-../conf/VCXDrives.inc                      /epoc32/winscw/c/testframework/VCXDrives.inc
-../conf/VCXErrors.inc                      /epoc32/winscw/c/testframework/VCXErrors.inc
+../conf/VCXConnUtilTestMasterAndSlave.cfg  /epoc32/winscw/c/testframework/vcxconnutiltestmasterandslave.cfg
+../conf/VCXConnUtilTestSNAP.cfg            /epoc32/winscw/c/testframework/vcxconnutiltestsnap.cfg
+../conf/VCXConnUtilTestStates.cfg          /epoc32/winscw/c/testframework/vcxconnutilteststates.cfg
+../conf/VCXConnUtilTest.inc                /epoc32/winscw/c/testframework/vcxconnutiltest.inc
+../conf/VCXConsts.inc                      /epoc32/winscw/c/testframework/vcxconsts.inc
+../conf/VCXDrives.inc                      /epoc32/winscw/c/testframework/vcxdrives.inc
+../conf/VCXErrors.inc                      /epoc32/winscw/c/testframework/vcxerrors.inc
 
 PRJ_EXPORTS
 

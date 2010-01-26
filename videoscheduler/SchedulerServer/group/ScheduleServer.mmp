@@ -23,7 +23,7 @@
 //OPTION ARMCC --asm --interleave
 ALWAYS_BUILD_AS_ARM
 
-TARGET            CseSchedulerServer.exe
+TARGET            cseschedulerserver.exe
 #if !defined(__SERIES60_30__) && !defined(__SERIES60_31__) && !defined(__SERIES60_32__)
 EPOCSTACKSIZE     0x10000
 #else
@@ -68,5 +68,5 @@ LIBRARY				ws32.lib
 LIBRARY				apgrfx.lib
 LIBRARY				apparc.lib
 LIBRARY				estor.lib
-LIBRARY				CseSchedulerClient.lib
+LIBRARY				cseschedulerclient.lib
 LIBRARY             ecom.lib
