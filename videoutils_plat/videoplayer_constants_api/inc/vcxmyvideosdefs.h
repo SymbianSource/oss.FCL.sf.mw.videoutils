@@ -31,11 +31,16 @@
 * MPX ID has this as iId1 member and 1 as iId2.
 * These are same as indexes in path.
 */
+
 const TInt KVcxMvcCategoryIdAll          = 0;
 const TInt KVcxMvcCategoryIdDownloads    = 1;
 const TInt KVcxMvcCategoryIdTvRecordings = 2;
 const TInt KVcxMvcCategoryIdCaptured     = 3;
 const TInt KVcxMvcCategoryIdOther        = 4;
+const TInt KCategoryIdLastWatched        = 5;
+const TInt KCategoryIdExtraItem1         = 6;
+const TInt KCategoryIdExtraItem2         = 7;
+const TInt KCategoryIdExtraItem3         = 8;
 
 /**
 * Same as KIptvUrlMaxLength in IptvUtil.h.
@@ -114,8 +119,9 @@ typedef enum
     EVcxMyVideosOriginTvRecording        = MdeConstants::Object::ERecorded
     }  TVcxMyVideosOrigin;
 
-const TInt KVcxMyVideosCollectionCenrepUid             = 0x2001B2A9;
-const TInt KVcxMyVideosCollectionCenrepKeySortingOrder = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepUid                 = 0x2001B2A9;
+const TInt KVcxMyVideosCollectionCenrepKeySortingOrder     = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedMpxId = 0x02; 
 
 const TInt KVcxMyVideosCenRepUid = 0x102750E2; // same as KIptvCenRepUid in CIptvUtil.h
 const TInt KVcxMyVideosCenRepPreferredMemoryKey = 0x01; // same as KIptvCenRepPreferredMemoryKey in CIptvUtil.h
@@ -466,6 +472,12 @@ const TMPXAttributeData KVcxMediaMyVideosInt32Value = {KVcxMediaIdMyVideos, 1 <<
  */
 const TMPXAttributeData KVcxMediaMyVideosTransactionId = {KVcxMediaIdMyVideos, 1 << 23};
 
+/**
+ * 36.
+ * TBool, video list is partial. This is set to Category level video list to inform
+ * client that video cache is not complete yet.
+ */
+const TMPXAttributeData KVcxMediaMyVideosVideoListIsPartial = {KVcxMediaIdMyVideos, 1 << 24};
 
 
 // -------- end of my videos media attributes -------- //
