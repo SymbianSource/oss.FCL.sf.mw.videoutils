@@ -43,6 +43,15 @@ const TInt KCategoryIdExtraItem2         = 7;
 const TInt KCategoryIdExtraItem3         = 8;
 
 /**
+* My Videos Custom command ID
+*
+* This is sent to MPX video player app UI, 
+* when the my videos main view is initialized, and
+* player app should do the background initialization.
+*/
+const TInt KVcxMyVideosCmdDoLateConstruct =  0x20016B9D;
+
+/**
 * Same as KIptvUrlMaxLength in IptvUtil.h.
 * Comment copied from IptvUtil.h:
 * As far as I know url specification allows url to be as big as 2048, but
