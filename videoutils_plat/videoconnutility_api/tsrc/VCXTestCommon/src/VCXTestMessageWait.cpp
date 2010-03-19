@@ -205,8 +205,6 @@ EXPORT_C void CVCXTestMessageWait::WaitForAllL( TInt aTimeoutSeconds, TBool aDoB
         }
     else
         {
-        iWaitStarted = EFalse;
-        
         // Nothing to wait for.
         iTimeoutTimer->CancelTimer();
         
@@ -247,17 +245,10 @@ EXPORT_C void CVCXTestMessageWait::CoolDownL( TInt aSeconds )
 //
 EXPORT_C void CVCXTestMessageWait::ReceiveMessage( TInt32 aMsg, TInt aError )
 	{
-    if( !iWaitStarted )
-        {
-        VCXLOGLO1("CVCXTestMessageWait::ReceiveMessage: Wait not active.");
-        return;
-        }
-
     VCXLOGLO1(">>>CVCXTestMessageWait::ReceiveMessage");
 
     if( aError != KErrNone )
         {
-        iWaitStarted = EFalse;
         if( iActiveWaitBlocking->IsWaiting() )
             {
             iError = aError;
@@ -300,7 +291,6 @@ EXPORT_C void CVCXTestMessageWait::ReceiveMessage( TInt32 aMsg, TInt aError )
         
         if( iWaitedMessages.Count() <= 0 )
             {
-            iWaitStarted = EFalse;
             // Stop wait.
             if( iActiveWaitBlocking->IsWaiting() )
                 {
@@ -337,7 +327,6 @@ void CVCXTestMessageWait::TimerComplete( TInt /* aTimerId */, TInt aError )
         else
         if( iWaitedMessages.Count() > 0 )
             {
-            iWaitStarted = EFalse;
             VCXLOGLO2("CVCXTestMessageWait:: Timeout. Messages left: %d", iWaitedMessages.Count());
             if( iActiveWaitBlocking->IsWaiting() )
                 {

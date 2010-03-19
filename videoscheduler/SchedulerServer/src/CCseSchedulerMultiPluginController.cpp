@@ -23,7 +23,7 @@
 #include "CseDebug.h"                           // Debug macros
 #include "CCseSchedulerPluginStarter.h"
 #include "CCseSchedulerLandLord.h"
-#include <ipvideo/CCseScheduledProgram.h>
+#include <ipvideo/ccsescheduledprogram.h>
 #include "CCseSchedulerTimer.h"
 #include "CCseSchedulerServerEngine.h"
 #include "CCseSchedulerThreadPacket.h"

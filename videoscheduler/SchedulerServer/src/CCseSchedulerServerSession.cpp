@@ -22,7 +22,7 @@
 #include "CCseSchedulerServer.h"                // Common methods for server
 #include "CCseSchedulerServerEngine.h"          // Intelligence aka engine of server
 #include "CseSchedulerServer.pan"               // Server panic codes
-#include <ipvideo/CseSchedulerClientServerCommon.h>     // Common defines for client and server
+#include <ipvideo/cseschedulerclientservercommon.h>     // Common defines for client and server
 #include "CseDebug.h"                           // Debug macros
 
 // EXTERNAL DATA STRUCTURES

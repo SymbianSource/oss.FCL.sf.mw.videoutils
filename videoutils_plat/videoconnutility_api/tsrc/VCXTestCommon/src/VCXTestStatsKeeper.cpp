@@ -526,10 +526,7 @@ void CVCXTestStatsKeeper::GenerateReportL( const TDesC& aFileName, TBool aFullRe
         return;
         }
 
-    if ( aFullReport )
-        {
-        VCXTESTSTATS_W2( aFileName, "CVCXTestStatsKeeper:: Data size for the report: %d kBs", DataSizeL() );
-        }
+    VCXTESTSTATS_W2( aFileName, "CVCXTestStatsKeeper:: Data size for the report: %d kBs", DataSizeL() );
 
     if( iReportName )
         {

@@ -19,10 +19,10 @@
 
 
 // INCLUDE FILES
-#include <ipvideo/RCseSchedulerServiceBase.h>       // Client common methods (open, close etc)
-#include <ipvideo/RCseSchedulerClient.h>            // Client common methods (server start up etc)
+#include <ipvideo/rcseschedulerservicebase.h>       // Client common methods (open, close etc)
+#include <ipvideo/rcseschedulerclient.h>            // Client common methods (server start up etc)
 #include "CseDebug.h"                       // Debug macros
-#include <ipvideo/CseSchedulerClientServerCommon.h> // Common defines for client and server
+#include <ipvideo/cseschedulerclientservercommon.h> // Common defines for client and server
 
 // EXTERNAL DATA STRUCTURES
 // None.
