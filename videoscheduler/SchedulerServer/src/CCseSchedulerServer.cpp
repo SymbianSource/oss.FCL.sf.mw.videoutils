@@ -21,7 +21,7 @@
 #include "CCseSchedulerServer.h"                // Header file for this class
 #include "CCseSchedulerServerSession.h"         // Server session
 #include "CCseSchedulerServerEngine.h"          // Server intelligence aka engine
-#include <ipvideo/CseSchedulerClientServerCommon.h>     // Common defines for client and server
+#include <ipvideo/cseschedulerclientservercommon.h>     // Common defines for client and server
 #include "CseSchedulerServer.pan"               // Server panic codes
 #include "CseDebug.h"                           // Debug macros
 #include <e32svr.h>

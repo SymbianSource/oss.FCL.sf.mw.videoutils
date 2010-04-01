@@ -17,10 +17,10 @@
 
 
 // INCLUDE FILES
-#include <ipvideo/CCseSchedulerAPI.h>                   // Header file for this class
-#include <ipvideo/CCseScheduledProgram.h>               // Represent one schedule in database
-#include <ipvideo/CseSchedulerClientServerCommon.h>     // Common defines for client and server
-#include <ipvideo/RCseSchedulerClient.h>                // Client common methods (server start up etc)
+#include <ipvideo/ccseschedulerapi.h>                   // Header file for this class
+#include <ipvideo/ccsescheduledprogram.h>               // Represent one schedule in database
+#include <ipvideo/cseschedulerclientservercommon.h>     // Common defines for client and server
+#include <ipvideo/rcseschedulerclient.h>                // Client common methods (server start up etc)
 #include "CseDebug.h"                           // Debug macros
 #include <s32mem.h>
 
