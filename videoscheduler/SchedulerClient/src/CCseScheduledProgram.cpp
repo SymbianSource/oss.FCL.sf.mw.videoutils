@@ -18,7 +18,7 @@
 
 
 // INCLUDES
-#include <ipvideo/ccsescheduledprogram.h>   // Header file for this class
+#include <ipvideo/CCseScheduledProgram.h>   // Header file for this class
 #include "CseDebug.h"               // Debug macros
 
 // EXTERNAL DATA STRUCTURES

@@ -19,7 +19,7 @@
 
 // INCLUDE FILES
 #include "CCseSchedulerThreadPacket.h"
-#include <ipvideo/ccsescheduledprogram.h>   // Represent one schedule in database
+#include <ipvideo/CCseScheduledProgram.h>   // Represent one schedule in database
 #include <e32std.h>
 #include "CseDebug.h"               // Debug macros
 

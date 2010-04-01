@@ -19,7 +19,7 @@
 
 // INCLUDE FILES
 #include "CCseScheduleDB.h"         // Header file for this class
-#include <ipvideo/ccsescheduledprogram.h>   // Represent one schedule in database
+#include <ipvideo/CCseScheduledProgram.h>   // Represent one schedule in database
 #include <bautils.h>
 #include "CseDebug.h"               // Debug macros
 #include <babackup.h>

@@ -21,7 +21,7 @@
 
 // INCLUDES
 #include <e32base.h>
-#include <ipvideo/mcsepluginobserver.h>
+#include <ipvideo/MCsePluginObserver.h>
 #include "MCseSemaphoreSignalObserver.h"
 
 // CONSTANTS

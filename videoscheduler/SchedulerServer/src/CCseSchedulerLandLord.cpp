@@ -19,9 +19,9 @@
 
 #include "CCseSchedulerLandLord.h"
 #include "CCseSchedulerPluginStarter.h"
-#include <ipvideo/ccsescheduledprogram.h>
+#include <ipvideo/CCseScheduledProgram.h>
 #include "CCseSchedulerThreadPacket.h"
-#include <ipvideo/mcsescheduleobserver.h>   // Observer for informing engine
+#include <ipvideo/MCseScheduleObserver.h>   // Observer for informing engine
 #include <e32std.h>
 #include "CseDebug.h"               // Debug macros
 #include "CCseSemaphoreController.h"
