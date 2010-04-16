@@ -126,7 +126,7 @@ class CCseSchedulerApi : public CBase
 		* @param    aArray      On return contains items from the database.
 		* @return   Generic symbian error code.
 		*/                                       
-        TInt GetSchedulesByPluginUid( const TInt32 aPluginUid,
+		IMPORT_C TInt GetSchedulesByPluginUid( const TInt32 aPluginUid,
                                       RPointerArray<CCseScheduledProgram>& aArray ) const;
 
         /**
@@ -135,7 +135,7 @@ class CCseSchedulerApi : public CBase
 		* @param    aArray          On return contains items from the database.
 		* @return   Generic symbian error code.
 		*/                                      
-        TInt GetSchedulesByType( const TInt32 aScheduleType, 
+		IMPORT_C TInt GetSchedulesByType( const TInt32 aScheduleType, 
                                  RPointerArray<CCseScheduledProgram>& aArray ) const;
 
         /**
@@ -144,7 +144,7 @@ class CCseSchedulerApi : public CBase
 		* @param    aEnd        End of the time frame
 		* @return   Generic symbian error code.
 		*/                                                                               
-        TInt GetSchedulesByTime( const TTime& aBeginning,
+		IMPORT_C TInt GetSchedulesByTime( const TTime& aBeginning,
                                  const TTime& aEnd,
                                  RPointerArray<CCseScheduledProgram>& aArray ) const;
                                          

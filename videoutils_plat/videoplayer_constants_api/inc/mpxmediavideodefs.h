@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 4 %
+// Version : %version: 5 %
 
 
 
@@ -53,6 +53,8 @@ const TMPXAttributeData KMPXMediaVideoLocation            = { KMPXMediaIdVideo, 
 const TMPXAttributeData KMPXMediaVideoCopyright           = { KMPXMediaIdVideo, 0x4000 };
 const TMPXAttributeData KMPXMediaVideoLanguage            = { KMPXMediaIdVideo, 0x8000 };
 const TMPXAttributeData KMPXMediaVideoKeywords            = { KMPXMediaIdVideo, 0x10000 };
+const TMPXAttributeData KMPXMediaVideoCreated             = { KMPXMediaIdVideo, 0x20000 };
+const TMPXAttributeData KMPXMediaVideoLastModified        = { KMPXMediaIdVideo, 0x40000 };
 
 const TMPXAttributeData KMPXMediaVideoAll                 = { KMPXMediaIdVideo, 0xffffffff };
 

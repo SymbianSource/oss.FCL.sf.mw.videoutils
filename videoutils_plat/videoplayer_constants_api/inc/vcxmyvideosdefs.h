@@ -52,6 +52,12 @@ const TInt KVcxMvcCategoryIdOther        = 4;
 const TInt KVcxMvcMaxUrlLength = 1024;
 
 /**
+* Maximum length of KMPXMediaGeneralTitle attribute. Limiting factor
+* comes from MDS.
+*/
+const TInt KVcxMvcMaxTitleLength = 255;
+
+/**
 *  Content ID (UID) identifying My Videos category of content provided
 *  in the media object and associated attributes. 
 */
@@ -180,6 +186,7 @@ enum TVcxMyVideosEventInfo
 /**
 *  2. (BRIEF)
 *  Descriptor, contains video name.
+*  Maximum length is KVcxMvcMaxTitleLength.
 *  Saved to MDS.
 */
 //KMPXMediaGeneralTitle
@@ -920,7 +927,8 @@ cmd (CMPXCommand type) contains:                                                
                     |      cmd is the same as was given in .CommandL() call.                           |
                     |      cmd contains in addition to parameters set earlier:                         |
                     |         1. Media array has error codes set to each array item:                   |
-                    |            KVcxMediaMyVideosInt32Value = KErrNone if successful, KErrGeneral otherwise.
+                    |            KVcxMediaMyVideosInt32Value = KErrNone if successful,                 |
+                    |             KErrGeneral or KErrAlreadyExists otherwise.                          |
                     |         2. cmd KVcxMediaMyVideosInt32Value contains KErrNone if everything went  |
                     |            OK. If value is != KErrNone, then something went wrong and individual |
                     |            error codes for array items might not contain values.                 |
