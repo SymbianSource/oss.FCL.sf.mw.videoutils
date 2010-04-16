@@ -17,9 +17,9 @@
 
 
 // INCLUDE FILES
-#include <ipvideo/rcseschedulerclient.h>            // Header for this class
+#include <ipvideo/RCseSchedulerClient.h>            // Header for this class
 #include "CseDebug.h"                       // Debug macros
-#include <ipvideo/cseschedulerclientservercommon.h> // Common defines for client and server
+#include <ipvideo/CseSchedulerClientServerCommon.h> // Common defines for client and server
 #include <e32math.h>
 #include <f32file.h>
 

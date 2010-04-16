@@ -21,8 +21,8 @@
 // INCLUDE FILES
 #include "CCseSchedulerPluginStarter.h"
 #include "CseDebug.h"                           // Debug macros
-#include <ipvideo/ccsescheduledprogram.h>   // Represent one schedule in database
-#include <ipvideo/ccseschedulerpluginif.h>
+#include <ipvideo/CCseScheduledProgram.h>   // Represent one schedule in database
+#include <ipvideo/CCseSchedulerPluginIF.h>
 #include "CCseSchedulerThreadPacket.h"
 #include "CCseSemaphoreController.h"
 

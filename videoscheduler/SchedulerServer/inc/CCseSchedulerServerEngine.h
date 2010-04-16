@@ -21,7 +21,7 @@
 #define __CCSESCHEDULERSERVERENGINE_H
 
 //  INCLUDES
-#include <ipvideo/mcsescheduleobserver.h>   // Observer so that CCseSchedulerTimer can inform engine.
+#include <ipvideo/MCseScheduleObserver.h>   // Observer so that CCseSchedulerTimer can inform engine.
 #include "MCsePluginControllerObserver.h"   // Observer so that CCseSchedulerTimer can inform engine.
 #include "CseSchedulerServer.pan"   // Panic codes
 

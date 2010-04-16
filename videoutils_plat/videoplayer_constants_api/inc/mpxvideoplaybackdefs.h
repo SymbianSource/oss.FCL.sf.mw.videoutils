@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 6 %
+// Version : %version: 7 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -120,7 +120,8 @@ enum TMPXVideoPlaybackCommand
     EPbCmdHandleDecreaseVolume,
     EPbCmdCustomPause,
     EPbCmdCustomPlay,
-    EPbCmdRetrieveBufferingPercentage
+    EPbCmdRetrieveBufferingPercentage,
+    EPbCmdSurfaceRemoved
 };
 
 enum TMPXGeneralError
@@ -165,7 +166,8 @@ enum TMPXVideoDisplayCommand
 {
     EPbMsgVideoSurfaceCreated,
     EPbMsgVideoSurfaceChanged,
-    EPbMsgVideoSurfaceRemoved
+    EPbMsgVideoSurfaceRemoved,
+    EPbMsgVideoRemoveDisplayWindow
 };
 
 

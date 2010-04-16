@@ -22,8 +22,8 @@
 
 // INCLUDES
 #include <e32base.h>
-#include <ipvideo/mcsepluginobserver.h>
-#include <ipvideo/mcsescheduleobserver.h>
+#include <ipvideo/MCsePluginObserver.h>
+#include <ipvideo/MCseScheduleObserver.h>
 #include "MCseSchedulerTimerObserver.h"
 #include "MCsePluginControllerObserver.h"
 

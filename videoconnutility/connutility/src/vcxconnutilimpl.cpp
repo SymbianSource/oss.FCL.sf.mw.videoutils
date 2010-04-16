@@ -22,12 +22,12 @@
 #include <bldvariant.hrh>
 #include <commdb.h>            // CMDBSession
 #include <commsdattypesv1_1.h> // CCDWAPIPBearerRecord
-#include <connectionuiutilities.h> 
+#include <ConnectionUiUtilities.h> 
 #include <cmdestination.h>
 #include <cdbcols.h>
 #include <commdbconnpref.h>
 #include <eikbtgrp.h>
-#include <wlancdbcols.h>
+#include <WlanCdbCols.h>
 #include <connpref.h>
 #include <extendedconnpref.h>
 #include <mpxlog.h>

@@ -23,12 +23,12 @@
 #include <e32def.h>
 #include <e32const.h>
 #include "CCseSchedulerServerEngine.h"      // Common methods for server
-#include <ipvideo/cseschedulerclientservercommon.h> // Common defines for client and server
-#include <ipvideo/ccsescheduledprogram.h>           // Represent one schedule in database
+#include <ipvideo/CseSchedulerClientServerCommon.h> // Common defines for client and server
+#include <ipvideo/CCseScheduledProgram.h>           // Represent one schedule in database
 #include "CseDebug.h"                       // Debug macros
 #include "CCseScheduleDB.h"                 // Schedule database
 #include "CCseSchedulerTimer.h"             // Schedule timer for determining schedule times
-#include <ipvideo/ccseschedulerpluginif.h>          // Scheduler plugin interface
+#include <ipvideo/CCseSchedulerPluginIF.h>          // Scheduler plugin interface
 #include "CCseSchedulerUniPluginController.h"
 #include "CCseSchedulerMultiPluginController.h"
 #include "CCseSchedulerServer.h"
