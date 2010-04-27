@@ -11,11 +11,12 @@
 *
 * Contributors:
 *
-* Description: 
+* Description:
 *
 */
 
 
+// Version : %version:  da1mmcf#4 %
 
 
 #ifndef VCXMYVIDEOSUIDS_H
@@ -25,5 +26,10 @@
 * UID of My Videos MPX Collection.
 */
 #define KVcxUidMyVideosMpxCollection 0x20016B97
+
+//
+//  UID for the In Memory collection plugin used for playlist files
+//
+#define KMpxInMemoryPluginUid 0x101FFCD8
 
 #endif // VCXMYVIDEOSUIDS_H
