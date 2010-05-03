@@ -7,7 +7,7 @@
   <systemModel>
     <layer name="mw_layer">
       <module name="videoutils">
-        <unit unitID="vado.videoutils" mrp="" bldFile="&layer_real_source_path;/group" name="videoutils" />
+        <unit unitID="vado.videoutils" mrp="" bldFile="&layer_real_source_path;" name="videoutils" proFile="videoutils.pro" qmakeArgs="-r" />
       </module>
     </layer>
 

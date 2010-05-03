@@ -1,9 +1,0 @@
-EXPORTS
-	?DecreaseReferenceCount@CVcxConnectionUtility@@QAEXXZ @ 1 NONAME ; void CVcxConnectionUtility::DecreaseReferenceCount(void)
-	?DisconnectL@CVcxConnectionUtility@@QAEXXZ @ 2 NONAME ; void CVcxConnectionUtility::DisconnectL(void)
-	?GetIap@CVcxConnectionUtility@@QAEHAAKH@Z @ 3 NONAME ; int CVcxConnectionUtility::GetIap(unsigned long &, int)
-	?InstanceL@CVcxConnectionUtility@@SAPAV1@XZ @ 4 NONAME ; class CVcxConnectionUtility * CVcxConnectionUtility::InstanceL(void)
-	?RegisterObserverL@CVcxConnectionUtility@@QAEXPAVMConnUtilEngineObserver@@@Z @ 5 NONAME ; void CVcxConnectionUtility::RegisterObserverL(class MConnUtilEngineObserver *)
-	?RemoveObserver@CVcxConnectionUtility@@QAEXPAVMConnUtilEngineObserver@@@Z @ 6 NONAME ; void CVcxConnectionUtility::RemoveObserver(class MConnUtilEngineObserver *)
-	?WapIdFromIapIdL@CVcxConnectionUtility@@QAEKK@Z @ 7 NONAME ; unsigned long CVcxConnectionUtility::WapIdFromIapIdL(unsigned long)
-

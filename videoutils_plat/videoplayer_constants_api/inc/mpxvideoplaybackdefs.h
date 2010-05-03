@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 7 %
+// Version : %version: 10 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -121,7 +121,8 @@ enum TMPXVideoPlaybackCommand
     EPbCmdCustomPause,
     EPbCmdCustomPlay,
     EPbCmdRetrieveBufferingPercentage,
-    EPbCmdSurfaceRemoved
+    EPbCmdLoadingStarted,
+    EPbCmdHideControls
 };
 
 enum TMPXGeneralError
@@ -139,37 +140,35 @@ enum TMPXGeneralError
 //  Content ID identifying video display window category of content provided
 //  in the media object and associated attributes.
 //
-const TInt KMPXMediaIdVideoDisplaySyncMessage = 0x20024333;
+const TInt KMPXMediaIdVideoDisplayMessage = 0x20024333;
 
 //
 //  TInt for Command Id
 //
-const TMPXAttributeData KMPXMediaVideoDisplayCommand = { KMPXMediaIdVideoDisplaySyncMessage, 0x01 };
+const TMPXAttributeData KMPXMediaVideoDisplayCommand = { KMPXMediaIdVideoDisplayMessage, 0x01 };
 
 //
 //  TSurfaceId
 //
-const TMPXAttributeData KMPXMediaVideoDisplayTSurfaceId = { KMPXMediaIdVideoDisplaySyncMessage, 0x02 };
+const TMPXAttributeData KMPXMediaVideoDisplayTSurfaceId = { KMPXMediaIdVideoDisplayMessage, 0x02 };
 
 //
 //  TRect
 //
-const TMPXAttributeData KMPXMediaVideoDisplayCropRect = { KMPXMediaIdVideoDisplaySyncMessage, 0x04 };
+const TMPXAttributeData KMPXMediaVideoDisplayCropRect = { KMPXMediaIdVideoDisplayMessage, 0x04 };
 
 //
 //  TVideoAspectRatio
 //
-const TMPXAttributeData KMPXMediaVideoDisplayAspectRatio = { KMPXMediaIdVideoDisplaySyncMessage, 0x08 };
+const TMPXAttributeData KMPXMediaVideoDisplayAspectRatio = { KMPXMediaIdVideoDisplayMessage, 0x08 };
 
 
 enum TMPXVideoDisplayCommand
 {
     EPbMsgVideoSurfaceCreated,
     EPbMsgVideoSurfaceChanged,
-    EPbMsgVideoSurfaceRemoved,
-    EPbMsgVideoRemoveDisplayWindow
+    EPbMsgVideoSurfaceRemoved
 };
-
 
 #endif
 

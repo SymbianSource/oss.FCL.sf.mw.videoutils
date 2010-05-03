@@ -17,6 +17,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 symbian: {
-BLD_INF_RULES.prj_mmpfiles += $$LITERAL_HASH"include \"videoutils_plat/group/bld.inf\""
-BLD_INF_RULES.prj_mmpfiles += $$LITERAL_HASH"include \"videoconnutility/group/bld.inf\""
+BLD_INF_RULES.prj_mmpfiles += $$LITERAL_HASH"include \"videoutils_plat/videoplayer_constants_api/group/bld.inf\""
+BLD_INF_RULES.prj_mmpfiles += $$LITERAL_HASH"include \"videoutils_plat/videoscheduler_api/group/bld.inf\""
 }
