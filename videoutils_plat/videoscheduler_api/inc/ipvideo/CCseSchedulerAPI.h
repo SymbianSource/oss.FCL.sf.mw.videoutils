@@ -22,8 +22,8 @@
 
 // INCLUDES
 #include <e32base.h>
-#include <ipvideo/rcseschedulerclient.h>    // Client common methods (server start up etc)
-#include <ipvideo/rcseschedulerservice.h>   // Client common methods (open, close etc)
+#include <ipvideo/RCseSchedulerClient.h>    // Client common methods (server start up etc)
+#include <ipvideo/RCseSchedulerService.h>   // Client common methods (open, close etc)
 
 // CONSTANTS
 // None.
