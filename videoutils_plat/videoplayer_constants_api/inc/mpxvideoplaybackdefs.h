@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 11 %
+// Version : %version: 13 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -82,14 +82,19 @@ const TMPXAttributeData KMPXMediaVideoAppForeground = { KMPXMediaIdVideoPlayback
 const TMPXAttributeData KMPXMediaVideoTvOutConnected = { KMPXMediaIdVideoPlayback, 0x200 };
 
 //
+//  TInt
+//
+const TMPXAttributeData KMPXMediaVideoTvOutPlayAllowed = { KMPXMediaIdVideoPlayback, 0x400 };
+
+//
 //  MimeType returned by the recognizer
 //
-const TMPXAttributeData KMPXMediaVideoRecognizedMimeType = { KMPXMediaIdVideoPlayback, 0x400 };
+const TMPXAttributeData KMPXMediaVideoRecognizedMimeType = { KMPXMediaIdVideoPlayback, 0x800 };
 
 //
 //  TInt
 //
-const TMPXAttributeData KMPXMediaVideoBufferingPercentage = { KMPXMediaIdVideoPlayback, 0x800 };
+const TMPXAttributeData KMPXMediaVideoBufferingPercentage = { KMPXMediaIdVideoPlayback, 0x1000 };
 
 
 enum TMPXVideoPlaybackCommand
@@ -117,13 +122,19 @@ enum TMPXVideoPlaybackCommand
     EPbCmdCustomPlay,
     EPbCmdRetrieveBufferingPercentage,
     EPbCmdLoadingStarted,
-    EPbCmdHideControls
+    EPbCmdHideControls,
+    EPbCmdSetPosterFrame
 };
 
 enum TMPXGeneralError
 {
     KMPXVideoCallOngoingError = 1,
     KMPXVideoPlayOver2GDuringVoiceCallError,
+    KMPXVideoTvOutPlaybackNotAllowed,
+    KMPXVideoTvOutPlaybackNotAllowedClose,
+    KMPXVideoSetPosterFrameFailure,
+    KMPXVideoSetPosterFrameSuccess,
+    KMPXVideoSetPosterFrameNotSupported,
     KMPXPluginError
 };
 

@@ -165,6 +165,19 @@ enum TVcxMyVideosEventInfo
     */
     EVcxMyVideosVideoListOrderChanged
     };
+
+/**
+* These values are written to video list (received by HandleOpen)
+* KVcxMediaMyVideosInt32Value attribute to give extra information about the list status.
+*/
+enum TVcxMyVideosVideoListInfo
+    {    
+    /**
+    * Indicates that the list is complete and no more items are appended
+    * to the list by KVcxMessageMyVideosItemsAppended event.
+    */ 
+    EVcxMyVideosVideoListComplete
+    };
     
 //
 // These are the general attributes used in My Videos media object.
@@ -586,6 +599,9 @@ const TInt KVcxMessageMyVideosMessageArray = 23;
  video list at the same time. The scenario described below involves video list fetching from MDS. If the collection
  has the video list already fetched, then the HandleOpenL will contain all videos and KVcxMessageMyVideosListComplete
  is received immedetially.
+ 
+ The list complete status (EVcxMyVideosVideoListComplete) is also written to aEntries KVcxMediaMyVideosInt32Value
+ attribute when the list is complete. 
   
                  .------.                                                                 .-------------------------.
                  |CLIENT|                                                                 |MPX My Videos Collection |
