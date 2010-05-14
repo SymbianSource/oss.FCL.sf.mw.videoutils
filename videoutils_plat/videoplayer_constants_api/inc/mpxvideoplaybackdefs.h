@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 10 %
+// Version : %version: 11 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -82,19 +82,14 @@ const TMPXAttributeData KMPXMediaVideoAppForeground = { KMPXMediaIdVideoPlayback
 const TMPXAttributeData KMPXMediaVideoTvOutConnected = { KMPXMediaIdVideoPlayback, 0x200 };
 
 //
-//  TInt
-//
-const TMPXAttributeData KMPXMediaVideoTvOutPlayAllowed = { KMPXMediaIdVideoPlayback, 0x400 };
-
-//
 //  MimeType returned by the recognizer
 //
-const TMPXAttributeData KMPXMediaVideoRecognizedMimeType = { KMPXMediaIdVideoPlayback, 0x800 };
+const TMPXAttributeData KMPXMediaVideoRecognizedMimeType = { KMPXMediaIdVideoPlayback, 0x400 };
 
 //
 //  TInt
 //
-const TMPXAttributeData KMPXMediaVideoBufferingPercentage = { KMPXMediaIdVideoPlayback, 0x1000 };
+const TMPXAttributeData KMPXMediaVideoBufferingPercentage = { KMPXMediaIdVideoPlayback, 0x800 };
 
 
 enum TMPXVideoPlaybackCommand
@@ -129,9 +124,6 @@ enum TMPXGeneralError
 {
     KMPXVideoCallOngoingError = 1,
     KMPXVideoPlayOver2GDuringVoiceCallError,
-    KMPXVideoTvOutPlaybackNotAllowed,
-    KMPXVideoTvOutPlaybackNotAllowedClose,
-
     KMPXPluginError
 };
 
