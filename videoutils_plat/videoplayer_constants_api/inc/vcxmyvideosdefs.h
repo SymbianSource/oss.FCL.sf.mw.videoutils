@@ -128,9 +128,12 @@ typedef enum
     EVcxMyVideosOriginTvRecording        = MdeConstants::Object::ERecorded
     }  TVcxMyVideosOrigin;
 
-const TInt KVcxMyVideosCollectionCenrepUid                 = 0x2001B2A9;
-const TInt KVcxMyVideosCollectionCenrepKeySortingOrder     = 0x01; 
-const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedMpxId = 0x02; 
+const TInt KVcxMyVideosCollectionCenrepUid                      = 0x2001B2A9;
+const TInt KVcxMyVideosCollectionCenrepKeySortingOrder          = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedMpxId      = 0x02; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedName       = 0x03; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedPath       = 0x04; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedIndicator  = 0x05; 
 
 const TInt KVcxMyVideosCenRepUid = 0x102750E2; // same as KIptvCenRepUid in CIptvUtil.h
 const TInt KVcxMyVideosCenRepPreferredMemoryKey = 0x01; // same as KIptvCenRepPreferredMemoryKey in CIptvUtil.h

@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 12 %
+// Version : %version: 13 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -122,7 +122,8 @@ enum TMPXVideoPlaybackCommand
     EPbCmdCustomPlay,
     EPbCmdRetrieveBufferingPercentage,
     EPbCmdLoadingStarted,
-    EPbCmdHideControls
+    EPbCmdHideControls,
+    EPbCmdSetPosterFrame
 };
 
 enum TMPXGeneralError
@@ -131,7 +132,9 @@ enum TMPXGeneralError
     KMPXVideoPlayOver2GDuringVoiceCallError,
     KMPXVideoTvOutPlaybackNotAllowed,
     KMPXVideoTvOutPlaybackNotAllowedClose,
-
+    KMPXVideoSetPosterFrameFailure,
+    KMPXVideoSetPosterFrameSuccess,
+    KMPXVideoSetPosterFrameNotSupported,
     KMPXPluginError
 };
 
