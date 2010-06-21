@@ -26,8 +26,6 @@
 #include <mdeconstants.h>
 #include <mpxcollectionpath.h>
 
-#define VIDEO_COLLECTION_PLUGIN_TB92
-
 //These are written to TMPXItemId::iId2
 const TInt KVcxMvcMediaTypeVideo    = 0;
 const TInt KVcxMvcMediaTypeCategory = 1;
