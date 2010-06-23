@@ -26,6 +26,9 @@
 #include <mdeconstants.h>
 #include <mpxcollectionpath.h>
 
+#define VCX_DOWNLOADS_CATEGORY
+#define VCX_ALBUMS
+
 //These are written to TMPXItemId::iId2
 const TInt KVcxMvcMediaTypeVideo    = 0;
 const TInt KVcxMvcMediaTypeCategory = 1;
