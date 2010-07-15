@@ -56,6 +56,16 @@
 // None.
 
 // ============================ MEMBER FUNCTIONS ===============================
+// -----------------------------------------------------------------------------
+// CloseEngine
+// CB method used if ConstructL leaves. Just calls Close to initiate proper
+// shutdown sequence
+// -----------------------------------------------------------------------------
+//
+void CloseEngine( TAny* aPtr )
+    {
+    static_cast<CCseSchedulerServerEngine*>( aPtr )->Close();
+    }
 
 // -----------------------------------------------------------------------------
 // CCseSchedulerServerEngine::CCseSchedulerServerEngine
@@ -79,10 +89,10 @@ CCseSchedulerServerEngine* CCseSchedulerServerEngine::NewL( CCseSchedulerServer&
     {
     CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServerEngine::NewL");
     
-    CCseSchedulerServerEngine* self = new( ELeave ) CCseSchedulerServerEngine( aServer );
-    CleanupStack::PushL( self );
+    CCseSchedulerServerEngine* self = new( ELeave ) CCseSchedulerServerEngine( aServer );    
+    CleanupStack::PushL( TCleanupItem( CloseEngine, self ) );
     self->ConstructL();
-    CleanupStack::Pop( self );
+    CleanupStack::Pop( ); // CleanupItem
     
     CSELOGSTRING_HIGH_LEVEL("<<<CCseSchedulerServerEngine::NewL");
     return self;
@@ -95,11 +105,11 @@ CCseSchedulerServerEngine* CCseSchedulerServerEngine::NewL( CCseSchedulerServer&
 //
 void CCseSchedulerServerEngine::ConstructL()
     {
-    CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServerEngine::ConstructL");
-        
+    CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServerEngine::ConstructL");       
+
     iDb = CCseScheduleDB::NewL();
     iCompletitionBreaker = CIdle::NewL( CActive::EPriorityLow );
-    
+
 	CSELOGSTRING_HIGH_LEVEL("<<<CCseSchedulerServerEngine::ConstructL");
     }
 
@@ -111,16 +121,15 @@ void CCseSchedulerServerEngine::ConstructL()
 CCseSchedulerServerEngine::~CCseSchedulerServerEngine()
     {
     CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServerEngine::~CCseSchedulerServerEngine");
-    
+
     delete iDb;
     	
 	iPluginControllerArray.ResetAndDestroy();
 	iPluginControllerArray.Close();
-    delete iCompletitionBreaker;    
-		
+    delete iCompletitionBreaker;
+    
     CSELOGSTRING_HIGH_LEVEL("<<<CCseSchedulerServerEngine::~CCseSchedulerServerEngine");
     }
-
 
 // -----------------------------------------------------------------------------
 // CCseSchedulerServerEngine::GeneralServiceL
@@ -864,14 +873,14 @@ TBool CCseSchedulerServerEngine::IsSchedulerActive() const
 //
 void CCseSchedulerServerEngine::Close()
 	{
-	CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServerEngine::IsSchedulerActive");
+	CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServerEngine::Close");
 	
     while( AccessCount() >= 1 )
         {
         Dec();
         }
 	
-	CSELOGSTRING_HIGH_LEVEL("<<<CCseSchedulerServerEngine::IsSchedulerActive");
+	CSELOGSTRING_HIGH_LEVEL("<<<CCseSchedulerServerEngine::Close");
 	}
 
 	

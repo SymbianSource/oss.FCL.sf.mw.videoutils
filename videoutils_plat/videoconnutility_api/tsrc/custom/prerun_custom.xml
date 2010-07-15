@@ -52,11 +52,3 @@
         <param dir="c:\logs\testframework\Testserver"/>
     	</params>
 </step>
-<step name="Install IAP file" harness="STIF" enabled="true" passrate="100" significant="false">
-       <command>install</command>
-       <reboot target-alias="*" when="after" />
-       <params>
-       <param src="cccccc00.cre"/>
-       <param dst="c:\private\10202be9\persists\cccccc00.cre"/>
-       </params>
-</step>

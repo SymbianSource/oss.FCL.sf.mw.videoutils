@@ -168,13 +168,14 @@ TInt CCseSchedulerServer::ThreadFunction( )
 	CTrapCleanup* cleanupStack = CTrapCleanup::New();    
     if ( !cleanupStack )
         {
-        PanicServer( ECseCreateTrapCleanup );
+        CSELOGSTRING_HIGH_LEVEL("CCseSchedulerServer::ThreadFunction - Could not create cleanupstack: %d");
+        return KErrNone;
         }
 
     TRAPD( err, ThreadFunctionL( ) );
     if ( err )
         {
-        PanicServer( ECseSrvCreateServer );
+        CSELOGSTRING2_HIGH_LEVEL("CCseSchedulerServer::ThreadFunction - Main thread leaved: %d", err );
         }
 
     delete cleanupStack;    
@@ -300,17 +301,21 @@ void CCseSchedulerServer::Dec()
 void CCseSchedulerServer::DeleteSchedulerEngine()
     {
 	CSELOGSTRING_HIGH_LEVEL(">>>CCseSchedulerServer::DeleteSchedulerEngine");
-    
+		
     if ( iContainerIx )
         {
-        iSchedulerEngine->Close();
+        if( iObjectCon->Count() > 0 )
+            {
+            iSchedulerEngine->Close();
+            }
+    
         iContainerIx->Remove( iObjectCon );
         delete iContainerIx; 
 		iContainerIx = NULL;
 		iSchedulerEngine = NULL;
         }
-
-    if( iStarterBreaker->IsActive() )
+    
+    if( iStarterBreaker && iStarterBreaker->IsActive() )
         {
         iStarterBreaker->Cancel();
         }
