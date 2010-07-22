@@ -2,7 +2,7 @@
 * Copyright (c) 2008 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
-* under the terms of "Eclipse Public License v1.0"
+* under the terms of the License "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
 *
@@ -26,6 +26,9 @@
 #include <mdeconstants.h>
 #include <mpxcollectionpath.h>
 
+#define VCX_DOWNLOADS_CATEGORY
+#define VCX_ALBUMS
+
 //These are written to TMPXItemId::iId2
 const TInt KVcxMvcMediaTypeVideo    = 0;
 const TInt KVcxMvcMediaTypeCategory = 1;
@@ -40,6 +43,19 @@ const TInt KVcxMvcCategoryIdDownloads    = 1;
 const TInt KVcxMvcCategoryIdTvRecordings = 2;
 const TInt KVcxMvcCategoryIdCaptured     = 3;
 const TInt KVcxMvcCategoryIdOther        = 4;
+const TInt KCategoryIdLastWatched        = 5;
+const TInt KCategoryIdExtraItem1         = 6;
+const TInt KCategoryIdExtraItem2         = 7;
+const TInt KCategoryIdExtraItem3         = 8;
+
+/**
+* My Videos Custom command ID
+*
+* This is sent to MPX video player app UI, 
+* when the my videos main view is initialized, and
+* player app should do the background initialization.
+*/
+const TInt KVcxMyVideosCmdDoLateConstruct =  0x20016B9D;
 
 /**
 * Same as KIptvUrlMaxLength in IptvUtil.h.
@@ -124,8 +140,12 @@ typedef enum
     EVcxMyVideosOriginTvRecording        = MdeConstants::Object::ERecorded
     }  TVcxMyVideosOrigin;
 
-const TInt KVcxMyVideosCollectionCenrepUid             = 0x2001B2A9;
-const TInt KVcxMyVideosCollectionCenrepKeySortingOrder = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepUid                      = 0x2001B2A9;
+const TInt KVcxMyVideosCollectionCenrepKeySortingOrder          = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedMpxId      = 0x02; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedName       = 0x03; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedPath       = 0x04; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedIndicator  = 0x05; 
 
 const TInt KVcxMyVideosCenRepUid = 0x102750E2; // same as KIptvCenRepUid in CIptvUtil.h
 const TInt KVcxMyVideosCenRepPreferredMemoryKey = 0x01; // same as KIptvCenRepPreferredMemoryKey in CIptvUtil.h
@@ -164,6 +184,19 @@ enum TVcxMyVideosEventInfo
     * UI must fetch new list by calling OpenL().
     */
     EVcxMyVideosVideoListOrderChanged
+    };
+
+/**
+* These values are written to video list (received by HandleOpen)
+* KVcxMediaMyVideosInt32Value attribute to give extra information about the list status.
+*/
+enum TVcxMyVideosVideoListInfo
+    {    
+    /**
+    * Indicates that the list is complete and no more items are appended
+    * to the list by KVcxMessageMyVideosItemsAppended event.
+    */ 
+    EVcxMyVideosVideoListComplete
     };
     
 //
@@ -484,6 +517,13 @@ const TMPXAttributeData KVcxMediaMyVideosUint32Value = {KVcxMediaIdMyVideos, 1 <
  */
 const TMPXAttributeData KVcxMediaMyVideosTransactionId = {KVcxMediaIdMyVideos, 1 << 24};
 
+/**
+ * 37.
+ * TBool, video list is partial. This is set to Category level video list to inform
+ * client that video cache is not complete yet.
+ */
+const TMPXAttributeData KVcxMediaMyVideosVideoListIsPartial = {KVcxMediaIdMyVideos, 1 << 24};
+
 
 // -------- end of my videos media attributes -------- //
 
@@ -586,6 +626,9 @@ const TInt KVcxMessageMyVideosMessageArray = 23;
  video list at the same time. The scenario described below involves video list fetching from MDS. If the collection
  has the video list already fetched, then the HandleOpenL will contain all videos and KVcxMessageMyVideosListComplete
  is received immedetially.
+ 
+ The list complete status (EVcxMyVideosVideoListComplete) is also written to aEntries KVcxMediaMyVideosInt32Value
+ attribute when the list is complete. 
   
                  .------.                                                                 .-------------------------.
                  |CLIENT|                                                                 |MPX My Videos Collection |
