@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: 13 %
+// Version : %version: 14 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -123,7 +123,8 @@ enum TMPXVideoPlaybackCommand
     EPbCmdRetrieveBufferingPercentage,
     EPbCmdLoadingStarted,
     EPbCmdHideControls,
-    EPbCmdSetPosterFrame
+    EPbCmdSetPosterFrame,
+    EPbCmdSurfaceRemovedFromWindow
 };
 
 enum TMPXGeneralError
