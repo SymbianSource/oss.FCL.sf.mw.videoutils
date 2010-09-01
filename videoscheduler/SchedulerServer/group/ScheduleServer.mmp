@@ -1,0 +1,72 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of the License "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    Project definition file*
+*/
+
+
+
+
+#include <platform_paths.hrh>
+#include <bldvariant.hrh>
+
+//OPTION ARMCC --asm --interleave
+ALWAYS_BUILD_AS_ARM
+
+TARGET            cseschedulerserver.exe
+#if !defined(__SERIES60_30__) && !defined(__SERIES60_31__) && !defined(__SERIES60_32__)
+EPOCSTACKSIZE     0x10000
+#else
+EPOCSTACKSIZE     0x5000
+#endif // !defined(__SERIES60_30__) && !defined(__SERIES60_31__) && !defined(__SERIES60_32__)
+
+targettype exe
+UID               0x1000008c 0x102750D6
+VENDORID VID_DEFAULT
+SECUREID	0x102750D6
+CAPABILITY 		 CAP_SERVER -DRM -AllFiles
+
+SOURCEPATH			../src
+SOURCE				CCseSchedulerServer.cpp
+SOURCE				CCseScheduleDB.cpp
+SOURCE				CCseSchedulerTimer.cpp
+SOURCE				CCseSchedulerServerSession.cpp
+SOURCE				CCseSchedulerServerEngine.cpp
+SOURCE              CCseSchedulerPluginControllerBase.cpp
+SOURCE              CCseSchedulerUniPluginController.cpp
+SOURCE              CCseSchedulerMultiPluginController.cpp
+SOURCE              CCseSchedulerPluginStarter.cpp
+SOURCE              CCseSchedulerLandLord.cpp
+SOURCE              CCseSchedulerThreadPacket.cpp
+SOURCE              CCseSemaphoreController.cpp
+SOURCEPATH			../data
+
+START RESOURCE      102750D5.rss
+END // RESOURCE
+
+USERINCLUDE         ../inc
+USERINCLUDE         ../../inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY				euser.lib
+LIBRARY             efsrv.lib
+LIBRARY				bafl.lib
+LIBRARY				flogger.lib
+LIBRARY				edbms.lib
+LIBRARY				ws32.lib
+LIBRARY				apgrfx.lib
+LIBRARY				apparc.lib
+LIBRARY				estor.lib
+LIBRARY				cseschedulerclient.lib
+LIBRARY             ecom.lib

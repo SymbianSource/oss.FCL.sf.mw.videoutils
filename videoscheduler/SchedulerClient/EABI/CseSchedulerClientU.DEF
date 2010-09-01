@@ -1,0 +1,53 @@
+EXPORTS
+	_ZN16CCseSchedulerApi23GetOverlappingSchedulesER20CCseScheduledProgramR13RPointerArrayIS0_E @ 1 NONAME
+	_ZN16CCseSchedulerApi4NewLEv @ 2 NONAME
+	_ZN16CCseSchedulerApiD0Ev @ 3 NONAME
+	_ZN16CCseSchedulerApiD1Ev @ 4 NONAME
+	_ZN16CCseSchedulerApiD2Ev @ 5 NONAME
+	_ZN20CCseScheduledProgram10SetEndTimeERK5TTime @ 6 NONAME
+	_ZN20CCseScheduledProgram12ExternalizeLER12RWriteStream @ 7 NONAME
+	_ZN20CCseScheduledProgram12InternalizeLER11RReadStream @ 8 NONAME
+	_ZN20CCseScheduledProgram12SetPluginUidEl @ 9 NONAME
+	_ZN20CCseScheduledProgram12SetStartTimeERK5TTime @ 10 NONAME
+	_ZN20CCseScheduledProgram13SetPluginTypeEl @ 11 NONAME
+	_ZN20CCseScheduledProgram15ApplicationDataEv @ 12 NONAME
+	_ZN20CCseScheduledProgram15SetDbIdentifierEm @ 13 NONAME
+	_ZN20CCseScheduledProgram15SetScheduleTypeEl @ 14 NONAME
+	_ZN20CCseScheduledProgram17ExternalizeLengthEv @ 15 NONAME
+	_ZN20CCseScheduledProgram19SetApplicationDataLERK6TDesC8 @ 16 NONAME
+	_ZN20CCseScheduledProgram4NewLERS_ @ 17 NONAME
+	_ZN20CCseScheduledProgram4NewLEv @ 18 NONAME
+	_ZN20CCseScheduledProgram7EndTimeEv @ 19 NONAME
+	_ZN20CCseScheduledProgram7SetNameERK6TDesC8 @ 20 NONAME
+	_ZN20CCseScheduledProgram9SetAppUidEl @ 21 NONAME
+	_ZN20CCseScheduledProgram9StartTimeEv @ 22 NONAME
+	_ZN20CCseScheduledProgramC1Ev @ 23 NONAME
+	_ZN20CCseScheduledProgramC2Ev @ 24 NONAME
+	_ZN20CCseScheduledProgramD0Ev @ 25 NONAME
+	_ZN20CCseScheduledProgramD1Ev @ 26 NONAME
+	_ZN20CCseScheduledProgramD2Ev @ 27 NONAME
+	_ZNK16CCseSchedulerApi11AddScheduleER20CCseScheduledProgram @ 28 NONAME
+	_ZNK16CCseSchedulerApi11GetScheduleEmP20CCseScheduledProgram @ 29 NONAME
+	_ZNK16CCseSchedulerApi14RemoveScheduleEm @ 30 NONAME
+	_ZNK16CCseSchedulerApi18GetSchedulesByTimeERK5TTimeS2_R13RPointerArrayI20CCseScheduledProgramE @ 31 NONAME
+	_ZNK16CCseSchedulerApi18GetSchedulesByTypeElR13RPointerArrayI20CCseScheduledProgramE @ 32 NONAME
+	_ZNK16CCseSchedulerApi20GetSchedulesByAppUidElR13RPointerArrayI20CCseScheduledProgramE @ 33 NONAME
+	_ZNK16CCseSchedulerApi23GetSchedulesByPluginUidElR13RPointerArrayI20CCseScheduledProgramE @ 34 NONAME
+	_ZNK20CCseScheduledProgram10PluginTypeEv @ 35 NONAME
+	_ZNK20CCseScheduledProgram12DbIdentifierEv @ 36 NONAME
+	_ZNK20CCseScheduledProgram12ScheduleTypeEv @ 37 NONAME
+	_ZNK20CCseScheduledProgram4NameEv @ 38 NONAME
+	_ZNK20CCseScheduledProgram6AppUidEv @ 39 NONAME
+	_ZNK20CCseScheduledProgram9DebugDumpEv @ 40 NONAME
+	_ZNK20CCseScheduledProgram9PluginUidEv @ 41 NONAME
+	_ZTI16CCseSchedulerApi @ 42 NONAME ; #<TI>#
+	_ZTI19RCseSchedulerClient @ 43 NONAME ; #<TI>#
+	_ZTI20CCseScheduledProgram @ 44 NONAME ; #<TI>#
+	_ZTI20RCseSchedulerService @ 45 NONAME ; #<TI>#
+	_ZTI24RCseSchedulerServiceBase @ 46 NONAME ; #<TI>#
+	_ZTV16CCseSchedulerApi @ 47 NONAME ; #<VT>#
+	_ZTV19RCseSchedulerClient @ 48 NONAME ; #<VT>#
+	_ZTV20CCseScheduledProgram @ 49 NONAME ; #<VT>#
+	_ZTV20RCseSchedulerService @ 50 NONAME ; #<VT>#
+	_ZTV24RCseSchedulerServiceBase @ 51 NONAME ; #<VT>#
+

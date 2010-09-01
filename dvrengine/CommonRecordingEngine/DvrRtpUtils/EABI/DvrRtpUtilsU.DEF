@@ -1,0 +1,46 @@
+EXPORTS
+	_ZN10CRtpPacket12SetTimeStampEm @ 1 NONAME
+	_ZN10CRtpPacket4NewLEv @ 2 NONAME
+	_ZN10CRtpPacket5NewLCEv @ 3 NONAME
+	_ZN10CRtpPacket8ParseRtpERK6TDesC8 @ 4 NONAME
+	_ZN10CRtpPacketD0Ev @ 5 NONAME
+	_ZN10CRtpPacketD1Ev @ 6 NONAME
+	_ZN10CRtpPacketD2Ev @ 7 NONAME
+	_ZN15CRtpTsConverter10UnInitiateEv @ 8 NONAME
+	_ZN15CRtpTsConverter4InitERK6TDesC8 @ 9 NONAME
+	_ZN15CRtpTsConverter4InitERKj @ 10 NONAME
+	_ZN15CRtpTsConverter4NewLEj @ 11 NONAME
+	_ZN15CRtpTsConverter9ConvertTsEji @ 12 NONAME
+	_ZN15CRtpTsConverter9InitiatedEv @ 13 NONAME
+	_ZN15CRtpTsConverterD0Ev @ 14 NONAME
+	_ZN15CRtpTsConverterD1Ev @ 15 NONAME
+	_ZN15CRtpTsConverterD2Ev @ 16 NONAME
+	_ZN8CRtpUtil10MakeBytesLERKiR5TDes8 @ 17 NONAME
+	_ZN8CRtpUtil11GetMimeInfoER5TDes8 @ 18 NONAME
+	_ZN8CRtpUtil11GetMimeInfoER6TDes16 @ 19 NONAME
+	_ZN8CRtpUtil11MakeBytesLCERKi @ 20 NONAME
+	_ZN8CRtpUtil14SpecialPacketLEi @ 21 NONAME
+	_ZN8CRtpUtil4NewLEv @ 22 NONAME
+	_ZN8CRtpUtil5NewLCEv @ 23 NONAME
+	_ZN8CRtpUtil8GetImeiLER6TDes16 @ 24 NONAME
+	_ZN8CRtpUtil8GetValueERK6TDesC8Ri @ 25 NONAME
+	_ZN8CRtpUtil8GetValueERK6TDesC8Rj @ 26 NONAME
+	_ZN8CRtpUtil9GetValueLERK6TDesC8 @ 27 NONAME
+	_ZN8CRtpUtil9GetValueLERK6TDesC8Ri @ 28 NONAME
+	_ZN8CRtpUtil9MakeBytesERKiR5TDes8 @ 29 NONAME
+	_ZN8CRtpUtilD0Ev @ 30 NONAME
+	_ZN8CRtpUtilD1Ev @ 31 NONAME
+	_ZN8CRtpUtilD2Ev @ 32 NONAME
+	_ZN9CRtpTimer4NewLER17MRtpTimerObserverRKN7CActive9TPriorityE @ 33 NONAME
+	_ZN9CRtpTimerD0Ev @ 34 NONAME
+	_ZN9CRtpTimerD1Ev @ 35 NONAME
+	_ZN9CRtpTimerD2Ev @ 36 NONAME
+	_ZTI10CRtpPacket @ 37 NONAME ; #<TI>#
+	_ZTI15CRtpTsConverter @ 38 NONAME ; #<TI>#
+	_ZTI8CRtpUtil @ 39 NONAME ; #<TI>#
+	_ZTI9CRtpTimer @ 40 NONAME ; #<TI>#
+	_ZTV10CRtpPacket @ 41 NONAME ; #<VT>#
+	_ZTV15CRtpTsConverter @ 42 NONAME ; #<VT>#
+	_ZTV8CRtpUtil @ 43 NONAME ; #<VT>#
+	_ZTV9CRtpTimer @ 44 NONAME ; #<VT>#
+
