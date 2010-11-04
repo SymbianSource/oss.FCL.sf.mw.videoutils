@@ -21,6 +21,9 @@
 #ifndef TVCXCONNUTILNOTIFIERPARAMS_
 #define TVCXCONNUTILNOTIFIERPARAMS_
 
+// Deprecation warning
+#warning This header file has been deprecated. Will be removed in one of the next SDK releases.
+
 /**
  * Max lenght of the string passed via message
  */

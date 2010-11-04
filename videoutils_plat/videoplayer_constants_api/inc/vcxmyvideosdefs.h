@@ -26,16 +26,33 @@
 #include <mdeconstants.h>
 #include <mpxcollectionpath.h>
 
+//These are written to TMPXItemId::iId2
+const TInt KVcxMvcMediaTypeVideo    = 0;
+const TInt KVcxMvcMediaTypeCategory = 1;
+const TInt KVcxMvcMediaTypeAlbum    = 2;
+
 /**
 * My Videos Collection category IDs.
-* MPX ID has this as iId1 member and 1 as iId2.
-* These are same as indexes in path.
+* TMPXItemId has these as iId1 member and KVcxMvcMediaTypeCategory as iId2.
 */
 const TInt KVcxMvcCategoryIdAll          = 0;
 const TInt KVcxMvcCategoryIdDownloads    = 1;
 const TInt KVcxMvcCategoryIdTvRecordings = 2;
 const TInt KVcxMvcCategoryIdCaptured     = 3;
 const TInt KVcxMvcCategoryIdOther        = 4;
+const TInt KCategoryIdLastWatched        = 5;
+const TInt KCategoryIdExtraItem1         = 6;
+const TInt KCategoryIdExtraItem2         = 7;
+const TInt KCategoryIdExtraItem3         = 8;
+
+/**
+* My Videos Custom command ID
+*
+* This is sent to MPX video player app UI, 
+* when the my videos main view is initialized, and
+* player app should do the background initialization.
+*/
+const TInt KVcxMyVideosCmdDoLateConstruct =  0x20016B9D;
 
 /**
 * Same as KIptvUrlMaxLength in IptvUtil.h.
@@ -46,6 +63,12 @@ const TInt KVcxMvcCategoryIdOther        = 4;
 * download manager get fixed please feel free to change value to 2048 
 */
 const TInt KVcxMvcMaxUrlLength = 1024;
+
+/**
+* Maximum length of KMPXMediaGeneralTitle attribute. Limiting factor
+* comes from MDS.
+*/
+const TInt KVcxMvcMaxTitleLength = 255;
 
 /**
 *  Content ID (UID) identifying My Videos category of content provided
@@ -114,8 +137,12 @@ typedef enum
     EVcxMyVideosOriginTvRecording        = MdeConstants::Object::ERecorded
     }  TVcxMyVideosOrigin;
 
-const TInt KVcxMyVideosCollectionCenrepUid             = 0x2001B2A9;
-const TInt KVcxMyVideosCollectionCenrepKeySortingOrder = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepUid                      = 0x2001B2A9;
+const TInt KVcxMyVideosCollectionCenrepKeySortingOrder          = 0x01; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedMpxId      = 0x02; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedName       = 0x03; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedPath       = 0x04; 
+const TInt KVcxMyVideosCollectionCenrepKeyLastWatchedIndicator  = 0x05; 
 
 const TInt KVcxMyVideosCenRepUid = 0x102750E2; // same as KIptvCenRepUid in CIptvUtil.h
 const TInt KVcxMyVideosCenRepPreferredMemoryKey = 0x01; // same as KIptvCenRepPreferredMemoryKey in CIptvUtil.h
@@ -155,6 +182,19 @@ enum TVcxMyVideosEventInfo
     */
     EVcxMyVideosVideoListOrderChanged
     };
+
+/**
+* These values are written to video list (received by HandleOpen)
+* KVcxMediaMyVideosInt32Value attribute to give extra information about the list status.
+*/
+enum TVcxMyVideosVideoListInfo
+    {    
+    /**
+    * Indicates that the list is complete and no more items are appended
+    * to the list by KVcxMessageMyVideosItemsAppended event.
+    */ 
+    EVcxMyVideosVideoListComplete
+    };
     
 //
 // These are the general attributes used in My Videos media object.
@@ -176,6 +216,7 @@ enum TVcxMyVideosEventInfo
 /**
 *  2. (BRIEF)
 *  Descriptor, contains video name.
+*  Maximum length is KVcxMvcMaxTitleLength.
 *  Saved to MDS.
 */
 //KMPXMediaGeneralTitle
@@ -459,13 +500,26 @@ const TMPXAttributeData KVcxMediaMyVideosInt32Value = {KVcxMediaIdMyVideos, 1 <<
 
 /**
  * 35.
+ * TUint32, general parameter, the usage depends on context.
+ * Not saved to MDS
+ */
+const TMPXAttributeData KVcxMediaMyVideosUint32Value = {KVcxMediaIdMyVideos, 1 << 23};
+
+/**
+ * 36.
  * TUint32, transaction ID, client sets this field when making asynchronous request.
  * Collection sets the same ID to response messages. Client can use this to pair
  * requests and responses.
  * Not saved to MDS
  */
-const TMPXAttributeData KVcxMediaMyVideosTransactionId = {KVcxMediaIdMyVideos, 1 << 23};
+const TMPXAttributeData KVcxMediaMyVideosTransactionId = {KVcxMediaIdMyVideos, 1 << 24};
 
+/**
+ * 37.
+ * TBool, video list is partial. This is set to Category level video list to inform
+ * client that video cache is not complete yet.
+ */
+const TMPXAttributeData KVcxMediaMyVideosVideoListIsPartial = {KVcxMediaIdMyVideos, 1 << 24};
 
 
 // -------- end of my videos media attributes -------- //
@@ -490,6 +544,10 @@ const TInt KVcxCommandMyVideosGetMediasByMpxId           = 5; //async
 const TInt KVcxCommandMyVideosMove                       = 6; //async
 const TInt KVcxCommandMyVideosCopy                       = 7; //async
 const TInt KVcxCommandMyVideosDelete                     = 8; //async
+const TInt KVcxCommandMyVideosAddToAlbum                 = 9; //async
+const TInt KVcxCommandMyVideosRemoveFromAlbum            = 10; //async
+const TInt KVcxCommandMyVideosAddAlbum                   = 11; //async & sync
+const TInt KVcxCommandMyVideosRemoveAlbums               = 12; //async
 
 /** This command cancels the move or copy operation only if it
  *  is allready being processed by the collection plugin. If the
@@ -497,7 +555,7 @@ const TInt KVcxCommandMyVideosDelete                     = 8; //async
  *  If Move or Copy operations were not in progress the command
  *  leaves with KErrNotFound.
  */
-const TInt KVcxCommandMyVideosCancelMoveOrCopy = 9; //sync
+const TInt KVcxCommandMyVideosCancelMoveOrCopy = 13; //sync
 
 /** This command cancels the delete operation only if it
  *  is allready being processed by the collection plugin. If the
@@ -505,9 +563,9 @@ const TInt KVcxCommandMyVideosCancelMoveOrCopy = 9; //sync
  *  If delete operation was not in progress the command
  *  leaves with KErrNotFound.
  */
-const TInt KVcxCommandMyVideosCancelDelete = 10; //sync
+const TInt KVcxCommandMyVideosCancelDelete = 14; //sync
 
-const TInt KVcxMessageMyVideosGetMediasByMpxIdResp = 11;
+const TInt KVcxMessageMyVideosGetMediasByMpxIdResp = 15;
 
 /**
 * Collection sends this message when new items are added
@@ -520,7 +578,7 @@ const TInt KVcxMessageMyVideosGetMediasByMpxIdResp = 11;
 * are broadcasted to all clients. So they might appear even when client hasn't
 * done OpenL.
 */
-const TInt KVcxMessageMyVideosItemsAppended = 12; //event
+const TInt KVcxMessageMyVideosItemsAppended = 16; //event
 
 /**
 * Collection sends this message when media list fetching has ended
@@ -531,32 +589,32 @@ const TInt KVcxMessageMyVideosItemsAppended = 12; //event
 * in the list it had received earlier (unless client itself initiated the new fetching
 * by calling OpenL().
 */
-const TInt KVcxMessageMyVideosListComplete = 13; //event
+const TInt KVcxMessageMyVideosListComplete = 17; //event
 
 /* Collection sends this message when it starts processing
  * Move Or Copy command. When this event is received,
  * KVcxCommandMyVideosCancelMoveOrCopy can be sent. 
  */
-const TInt KVcxMessageMyVideosMoveOrCopyStarted = 14; //event
+const TInt KVcxMessageMyVideosMoveOrCopyStarted = 18; //event
 
 /* Collection sends this message when it starts processing
  * KVcxCommandMyVideosDelete command. After this event is received,
  * KVcxCommandMyVideosCancelDelete can be sent. 
  */
-const TInt KVcxMessageMyVideosDeleteStarted = 15; //event
+const TInt KVcxMessageMyVideosDeleteStarted = 19; //event
 
 /* End events for Move/Copy/Delete operations. The response contains
  * MDS ID and error codes for each item.
  */
-const TInt KVcxMessageMyVideosMoveResp   = 16; //event 
-const TInt KVcxMessageMyVideosCopyResp   = 17; //event
-const TInt KVcxMessageMyVideosDeleteResp = 18; //event
+const TInt KVcxMessageMyVideosMoveResp   = 20; //event 
+const TInt KVcxMessageMyVideosCopyResp   = 21; //event
+const TInt KVcxMessageMyVideosDeleteResp = 22; //event
 
 /**
 * Indicates that media array variable contains other messages.
 * This message is only sent as the highest level item in the message tree.
 */
-const TInt KVcxMessageMyVideosMessageArray = 19;
+const TInt KVcxMessageMyVideosMessageArray = 23;
 
 /*
  OpenL() (video list) MSC
@@ -566,9 +624,9 @@ const TInt KVcxMessageMyVideosMessageArray = 19;
  has the video list already fetched, then the HandleOpenL will contain all videos and KVcxMessageMyVideosListComplete
  is received immedetially.
  
- KVcxMessageMyVideosItemsAppended and KVcxMessageMyVideosListComplete events concern only video lists.
- Category level always returns all categories at HandleOpenL.
- 
+ The list complete status (EVcxMyVideosVideoListComplete) is also written to aEntries KVcxMediaMyVideosInt32Value
+ attribute when the list is complete. 
+  
                  .------.                                                                 .-------------------------.
                  |CLIENT|                                                                 |MPX My Videos Collection |
                  '------'                                                                 '-------------------------'
@@ -616,116 +674,6 @@ iCollectionUtility->Collection().OpenL()                                        
                     |                                                                                  |
 
 
- DOWNLOAD START MSC
- ------------------
- 
- In future download request parameters can be made to contain media array of download parameters,
- allowing multiple downloads. Currently it is not supported.
- 
-                 .------.                                                                 .-------------------------.
-                 |CLIENT|                                                                 |MPX My Videos Collection |
-                 '------'                                                                 '-------------------------'
-                    |                                                                                  |
-                    |                                                                                  |
-iCollectionUtility->Collection().CommandL( *downloadStartCommand )                                     |
-                                                                                                       |
-downloadStartCommand (CMPXCommand type) contains:                                                      |
-    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
-    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosStartDownload                                  |
-    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection                                      |
-    KMPXCommandColAddMedia         = Download request parameters (CMPXMedia type)                      |
-        Download request parameters CMPXMedia type) contains:                                          |
-            KVcxMediaMyVideosIapId     = IAP ID                                                        |
-            KVcxMediaMyVideosUsername  = User name                                                     |
-            KVcxMediaMyVideosPassword  = Password                                                      |
-            KMPXMediaGeneralFlags      = EVcxMyVideosServiceHasReadOnlyIap|EVcxMyVideosSilent          |
-            KVcxMediaMyVideosRemoteUrl = Remote URL                                                    |
-            KMPXMediaGeneralTitle      = Video title                                                   |
-                    |--------------------------------------------------------------------------------->|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |  HandleCommandComplete(downloadStartCommand, FAIL/SUCCESS)                       |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |                                                                                  |
-                    |  HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                   |
-                    |                                                                                  |
-                    |  aMessage contains:                                                              |
-                    |      KMPXMessageGeneralId       = KMPXMessageIdItemChanged                       |
-                    |      KMPXMessageChangeEventType = EMPXItemInserted                               |
-                    |      KMPXMessageCollectionId    = KVcxUidMyVideosMpxCollection                   |
-                    |      KMPXMessageMediaGeneralId  = MPX ID                                         |
-                    |                                                                                  |
-                    |  The corresponding media object contains:                                        |
-                    |      KMPXMediaGeneralId         = MPX ID                                         |
-                    |      KMPXMediaGeneralUri        = Local file path                                |
-                    |      KVcxMediaMyVideosRemoteUrl = Remote URL                                     |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |                                                                                  |
-                    |                                                                                  |
-                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
-                    |                                                                                  |
-                    |  aMessage contains:                                                              |
-                    |      KMPXMessageGeneralId       = KMPXMessageIdItemChanged                       |
-                    |      KMPXMessageChangeEventType = EMPXItemModified                               |
-                    |      KMPXMessageCollectionId    = KVcxUidMyVideosMpxCollection                   |
-                    |     KMPXMessageMediaGeneralId   = MPX ID                                         |
-                    |                                                                                  |
-                    | The corresponding media object contains:                                         |
-                    |      KMPXMediaGeneralId             = MPX ID                                 |
-                    |      KVcxMediaMyVideosDownloadState = Download state                             |
-                    |      KVcxMediaMyVideosDownloadId    = Download ID                                |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
-
-
-
-DOWNLOAD CANCEL MSC
--------------------
- 
-                 .------.                                                                 .-------------------------.
-                 |CLIENT|                                                                 |MPX My Videos Collection |
-                 '------'                                                                 '-------------------------'
-                    |                                                                                  |
-                    |                                                                                  |
-iCollectionUtility->Collection().CommandL( *cancelDownloadCommand )                                    |
-                                                                                                       |
-cancelDownloadCommand (CMPXCommand type) contains:                                                     |
-    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
-    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosCancelDownload                                 |
-    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection                                      |
-    KMPXCommandColAddMedia         = Cancel download request parameters (CMPXMedia type)               |
-        Cancel download request parameters (CMPXMedia type) contains:                                  |
-        KMPXMediaGeneralId          = MPX ID                                                           |
-        KVcxMediaMyVideosDownloadId = download ID                                                      |
-        KMPXMediaGeneralUri         = file path                                                        |                                        
-                    |--------------------------------------------------------------------------------->|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |   HandleCommandComplete(cancelDownloadCommand, TInt aError )                     |
-                    |      aError is != KErrNone if either dl object (in Download Manager), file or    |
-                    |      MPX object was left to system.                                              |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |                                                                                  |
-                    |   HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                  |
-                    |                                                                                  |
-                    |   aMessage contains:                                                             |
-                    |       KMPXMessageGeneralId       = KMPXMessageIdItemChanged                      |
-                    |       KMPXMessageChangeEventType = EMPXItemDeleted                               |
-                    |       KMPXMessageCollectionId    = KVcxUidMyVideosMpxCollection                  |
-                    |       KMPXMessageMediaGeneralId  = MPX ID                                        |
-                    |                                                                                  |
-                    |       The corresponding media object is gone                                     |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-
-
 GET MEDIA FULL DETAILS BY MPX ID MSC
 ------------------------------------
 
@@ -761,7 +709,8 @@ GET MEDIAS BY MPX ID MSC
 ------------------------
 
  This command loads requested MDS items to MPX My Videos collection cache and returns the requested
- items to the client ( subset of the cache ).
+ items to the client ( subset of the cache ). Notice that if this command is given while OpenL is
+ being processed, then OpenL is interrupted and started from scratch when this command finishes.
  
                  .------.                                                                 .-------------------------.
                  |CLIENT|                                                                 |MPX My Videos Collection |
@@ -795,83 +744,6 @@ getMediasByMpxIdCommand (CMPXCommand type) contains:                            
                     |<---------------------------------------------------------------------------------|
                     |                                                                                  |                 
 
-DOWNLOAD PAUSE MSC
--------------------
- 
-                 .------.                                                                 .-------------------------.
-                 |CLIENT|                                                                 |MPX My Videos Collection |
-                 '------'                                                                 '-------------------------'
-                    |                                                                                  |
-                    |                                                                                  |
-iCollectionUtility->Collection().CommandL( *pauseDownloadCommand )                                     |
-                                                                                                       |
-cancelDownloadCommand (CMPXCommand type) contains:                                                     |
-    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
-    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosPauseDownload                                  |
-    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection                                      |
-    KVcxMediaMyVideosDownloadId    = download id                                                       |
-                    |--------------------------------------------------------------------------------->|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |   HandleCommandComplete(pauseDownloadCommand, FAIL/SUCCESS)                      |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |                                                                                  |
-                    |   HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                  |
-                    |                                                                                  |
-                    |   aMessage contains:                                                             |
-                    |       KMPXMessageGeneralId       = KMPXMessageIdItemChanged                      |
-                    |       KMPXMessageChangeEventType = EMPXItemModified                              |
-                    |       KMPXMessageCollectionId    = KVcxUidMyVideosMpxCollection                  |
-                    |       KMPXMessageMediaGeneralId  = MPX ID                                        |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-
-DOWNLOAD RESUME MSC
--------------------
- 
-                 .------.                                                                 .-------------------------.
-                 |CLIENT|                                                                 |MPX My Videos Collection |
-                 '------'                                                                 '-------------------------'
-                    |                                                                                  |
-                    |                                                                                  |
-iCollectionUtility->Collection().CommandL( *downloadStartCommand )                                     |
-                                                                                                       |
-downloadStartCommand (CMPXCommand type) contains:                                                      |
-    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
-    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosStartDownload                                  |
-    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection                                      |
-    KMPXCommandColAddMedia         = Download request parameters (CMPXMedia type)                      |
-        Download request parameters (CMPXMedia type) contains:                                         |
-            KVcxMediaMyVideosIapId      = IAP ID                                                       |
-            KVcxMediaMyVideosUsername   = User name                                                    |
-            KVcxMediaMyVideosPassword   = Password                                                     |
-            KMPXMediaGeneralFlags       = EVcxMyVideosServiceHasReadOnlyIap|EVcxMyVideosSilent         |
-            KVcxMediaMyVideosDownloadId = Download ID                                                  |
-                    |--------------------------------------------------------------------------------->|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |  HandleCommandComplete(downloadStartCommand, FAIL/SUCCESS)                       |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
-                    |                                                                                  |
-                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
-                    |                                                                                  |
-                    |  aMessage contains:                                                              |
-                    |      KMPXMessageGeneralId       = KMPXMessageIdItemChanged                       |
-                    |      KMPXMessageChangeEventType = EMPXItemModified                               |
-                    |      KMPXMessageCollectionId    = KVcxUidMyVideosMpxCollection                   |
-                    |      KMPXMessageMediaGeneralId  = MPX ID                                         |
-                    |                                                                                  |
-                    | The corresponding media object contains:                                         |
-                    |      KMPXMediaGeneralId             = MPX ID                                     |
-                    |      KVcxMediaMyVideosDownloadState = Download state                             |
-                    |      KVcxMediaMyVideosDownloadId    = Download ID                                |
-                    |<---------------------------------------------------------------------------------|
-                    |                                                                                  |
-                    |                                                                                  |
 
 VIDEO ADD MSC
 -------------
@@ -1000,7 +872,10 @@ videoMoveCommand (CMPXCommand type) contains:                                   
                     |          KVcxMediaMyVideosInt32Value = result (system wide error code)           |
                     |<---------------------------------------------------------------------------------|
                     |                                                                                  |
-                    |  HandleCommandComplete(videoMoveCommand, FAIL/SUCCESS)                           |
+                    |  HandleCommandComplete(videoMoveCommand, KErrNone)                               |
+                    |      videoDeleteCommand KVcxMediaMyVideosInt32Value contains KErrNone if everything went
+                    |      OK. If value is != KErrNone, then something went wrong and command might    |
+                    |      have ended prematurely                                                      |
                     |<---------------------------------------------------------------------------------|
                     
 
@@ -1052,13 +927,225 @@ videoDeleteCommand (CMPXCommand type) contains:                                 
                     |          KVcxMediaMyVideosInt32Value = result (system wide error code)           |
                     |<---------------------------------------------------------------------------------|
                     |                                                                                  |
-                    |  HandleCommandComplete(videoDeleteCommand, FAIL/SUCCESS)                         |
+                    |  HandleCommandComplete(videoDeleteCommand, KErrNone)                             |
+                    |      videoDeleteCommand KVcxMediaMyVideosInt32Value contains KErrNone if everything went
+                    |      OK. If value is != KErrNone, then something went wrong and command was ended|
+                    |      prematurely.                                                                |
                     |<---------------------------------------------------------------------------------|
                     
 
 CANCEL VIDEO DELETE MSC
 -----------------------
 
+
+
+ADD VIDEOS TO ALBUM MSC
+-----------------------
+Notice that adding items to album does not add videos from collection. Ie item added events
+will not arrive for this operation. Instead the modify event is sent for the album item which is
+affected.
+                 .------.                                                                 .-------------------------.
+                 |CLIENT|                                                                 |MPX My Videos Collection |
+                 '------'                                                                 '-------------------------'
+                    |                                                                                  |
+                    |                                                                                  |
+iCollectionUtility->Collection().CommandL( *cmd )                                                      |
+                                                                                                       |
+cmd (CMPXCommand type) contains:                                                                       |
+    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
+    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosAddToAlbum                                     |
+    KMPXCommandGeneralCollectionId = 0x20016B97                                                        |
+    KMPXCommandGeneralDoSync       = EFalse                                                            |
+    KVcxMediaMyVideosTransactionId = TR ID                                                             |
+    KVcxMediaMyVideosUint32Value   = Album MDS ID (album where to add)                                 |
+    KMPXMediaArrayContents         = Media array (CMPXMediaArray)                                      |
+        Media array contains array of CMPXMedia objects which contain:                                 |
+           KMPXMediaGeneralId = video MPX ID (video to add)                                            |           
+                    |--------------------------------------------------------------------------------->|
+                    |                                                                                  |
+                    |  HandleCommandComplete(cmd, KErrNone)                                            |
+                    |      cmd is the same as was given in .CommandL() call.                           |
+                    |      cmd contains in addition to parameters set earlier:                         |
+                    |         1. Media array has error codes set to each array item:                   |
+                    |            KVcxMediaMyVideosInt32Value = KErrNone if successful,                 |
+                    |             KErrGeneral or KErrAlreadyExists otherwise.                          |
+                    |         2. cmd KVcxMediaMyVideosInt32Value contains KErrNone if everything went  |
+                    |            OK. If value is != KErrNone, then something went wrong and individual |
+                    |            error codes for array items might not contain values.                 |
+                    |<---------------------------------------------------------------------------------|
+                    |                                                                                  |
+                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
+                    |                                                                                  |
+                    |  aMessage contains:                                                              |
+                    |      KMPXMessageGeneralId        = KMPXMessageIdItemChanged                      |
+                    |      KMPXMessageChangeEventType  = EMPXItemModified                              |
+                    |      KVcxMediaMyVideosInt32Value = EVcxMyVideosVideoListOrderChanged             |
+                    |      KMPXMessageCollectionId     = KVcxUidMyVideosMpxCollection                  |
+                    |      KMPXMessageMediaGeneralId   = MPX ID (ID of the album which had videos added)
+                    |<---------------------------------------------------------------------------------|
+
+
+REMOVE VIDEOS FROM ALBUM MSC
+----------------------------
+
+Notice that removing items from album does not remove videos from collection. Ie item deleted events
+will not arrive for this operation. Instead the modify event is sent for the album item which is
+affected.
+                 .------.                                                                 .-------------------------.
+                 |CLIENT|                                                                 |MPX My Videos Collection |
+                 '------'                                                                 '-------------------------'
+                    |                                                                                  |
+                    |                                                                                  |
+iCollectionUtility->Collection().CommandL( *cmd )                                                      |
+                                                                                                       |
+cmd (CMPXCommand type) contains:                                                                       |
+    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
+    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosRemoveFromAlbum                                |
+    KMPXCommandGeneralCollectionId = 0x20016B97                                                        |
+    KMPXCommandGeneralDoSync       = EFalse                                                            |
+    KVcxMediaMyVideosTransactionId = TR ID                                                             |
+    KVcxMediaMyVideosUint32Value   = Album MDS ID (iId1 member of TMPXItemId, album where from to remove) 
+    KMPXMediaArrayContents         = Media array (CMPXMediaArray)                                      |
+        Media array contains array of CMPXMedia objects which contain:                                 |
+           KMPXMediaGeneralId = video MPX ID (video to remove)                                         |           
+                    |--------------------------------------------------------------------------------->|
+                    |                                                                                  |
+                    |  HandleCommandComplete(cmd, KErrNone)                                            |
+                    |      cmd is the same as was given in .CommandL() call.                           |
+                    |      cmd contains in addition to parameters set earlier:                         |
+                    |         1. Media array has error codes set to each array item:                   |
+                    |            KVcxMediaMyVideosInt32Value = KErrNone if successful, KErrGeneral otherwise.
+                    |         2. cmd KVcxMediaMyVideosInt32Value contains KErrNone if everything went  |
+                    |            OK. If value is != KErrNone, then something went wrong and individual |
+                    |            error codes for array items might not contain values.                 |
+                    |<---------------------------------------------------------------------------------|
+                    |                                                                                  |
+                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
+                    |                                                                                  |
+                    |  aMessage contains:                                                              |
+                    |      KMPXMessageGeneralId        = KMPXMessageIdItemChanged                      |
+                    |      KMPXMessageChangeEventType  = EMPXItemModified                              |
+                    |      KVcxMediaMyVideosInt32Value = EVcxMyVideosVideoListOrderChanged             |
+                    |      KMPXMessageCollectionId     = KVcxUidMyVideosMpxCollection                  |
+                    |      KMPXMessageMediaGeneralId   = MPX ID (ID of the album which had videos removed)
+                    |<---------------------------------------------------------------------------------|
+
+ADD ALBUM MSC
+-------------
+
+Asynchronous version:
+
+                 .------.                                                                 .-------------------------.
+                 |CLIENT|                                                                 |MPX My Videos Collection |
+                 '------'                                                                 '-------------------------'
+                    |                                                                                  |
+                    |                                                                                  |
+iCollectionUtility->Collection().CommandL( *cmd )                                                      |
+                                                                                                       |
+cmd (CMPXCommand type) contains:                                                                       |
+    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
+    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosAddAlbum                                       |
+    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection (0x20016B97)                         |
+    KMPXCommandGeneralDoSync       = EFalse                                                            |
+    KVcxMediaMyVideosTransactionId = TR ID                                                             |
+    KMPXMediaGeneralTitle          = Album title text                                                  |
+                    |--------------------------------------------------------------------------------->|
+                    |                                                                                  |
+                    |  HandleCommandComplete(cmd, KErrNone)                                            |
+                    |      cmd is the same as was given in .CommandL() call.                           |
+                    |      cmd contains in addition to parameters set earlier:                         |
+                    |         1. cmd KVcxMediaMyVideosInt32Value contains KErrNone if everything went  |
+                    |            OK. If value is != KErrNone, then something went wrong.               |
+                    |         2. KMPXMediaGeneralId contains the MPX ID of the new album.              |
+                    |<---------------------------------------------------------------------------------|
+                    |                                                                                  |
+                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
+                    |                                                                                  |
+                    |  aMessage contains:                                                              |
+                    |      KMPXMessageGeneralId        = KMPXMessageIdItemChanged                      |
+                    |      KMPXMessageChangeEventType  = EMPXItemInserted                              |
+                    |      KVcxMediaMyVideosInt32Value = EVcxMyVideosListNoInfo                        |
+                    |      KMPXMessageCollectionId     = KVcxUidMyVideosMpxCollection                  |
+                    |      KMPXMessageMediaGeneralId   = MPX ID (ID of the new album)                  |
+                    |      KMPXCommandColAddMedia      = MPX media of the new album (CMPXMedia)        |
+                    |<---------------------------------------------------------------------------------|
+
+Synchronous version:
+
+CommandL leaves if error occurs.
+
+                 .------.                                                                 .-------------------------.
+                 |CLIENT|                                                                 |MPX My Videos Collection |
+                 '------'                                                                 '-------------------------'
+                    |                                                                                  |
+                    |                                                                                  |
+iCollectionUtility->Collection().CommandL( *cmd )                                                      |
+                                                                                                       |
+cmd (CMPXCommand type) contains:                                                                       |
+    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
+    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosAddAlbum                                       |
+    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection (0x20016B97)                         |
+    KMPXCommandGeneralDoSync       = ETrue                                                             |
+    KVcxMediaMyVideosTransactionId = TR ID                                                             |
+    KMPXMediaGeneralTitle          = Album title text                                                  |
+                                                                                                       |
+    After the call KMPXMediaGeneralId attribute contains the MPX ID of the new album.                  |
+                    |--------------------------------------------------------------------------------->.
+                    |<---------------------------------------------------------------------------------'
+                    |                                                                                  |
+                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
+                    |                                                                                  |
+                    |  aMessage contains:                                                              |
+                    |      KMPXMessageGeneralId        = KMPXMessageIdItemChanged                      |
+                    |      KMPXMessageChangeEventType  = EMPXItemInserted                              |
+                    |      KVcxMediaMyVideosInt32Value = EVcxMyVideosListNoInfo                        |
+                    |      KMPXMessageCollectionId     = KVcxUidMyVideosMpxCollection                  |
+                    |      KMPXMessageMediaGeneralId   = MPX ID (ID of the new album)                  |
+                    |      KMPXCommandColAddMedia      = MPX media of the new album (CMPXMedia)        |
+                    |<---------------------------------------------------------------------------------|
+
+
+
+REMOVE ALBUMS MSC
+-----------------
+
+                 .------.                                                                 .-------------------------.
+                 |CLIENT|                                                                 |MPX My Videos Collection |
+                 '------'                                                                 '-------------------------'
+                    |                                                                                  |
+                    |                                                                                  |
+iCollectionUtility->Collection().CommandL( *cmd )                                                      |
+                                                                                                       |
+cmd (CMPXCommand type) contains:                                                                       |
+    KMPXCommandGeneralId           = KVcxCommandIdMyVideos                                             |
+    KVcxMediaMyVideosCommandId     = KVcxCommandMyVideosRemoveAlbums                                   |
+    KMPXCommandGeneralCollectionId = KVcxUidMyVideosMpxCollection (0x20016B97)                         |
+    KMPXCommandGeneralDoSync       = EFalse (only async supported)                                     |
+    KVcxMediaMyVideosTransactionId = TR ID                                                             |
+    KMPXMediaArrayContents         = Media array (CMPXMediaArray)                                      |
+        Media array contains array of CMPXMedia objects which contain:                                 |
+           KMPXMediaGeneralId = album MPX ID (album to remove)                                         |           
+                    |--------------------------------------------------------------------------------->|
+                    |                                                                                  |
+                    |  HandleCommandComplete(cmd, KErrNone)                                            |
+                    |      cmd is the same as was given in .CommandL() call.                           |
+                    |      cmd contains in addition to parameters set earlier:                         |
+                    |         1. Media array has error codes set to each array item:                   |
+                    |            KVcxMediaMyVideosInt32Value = KErrNone if successful, KErrGeneral otherwise.
+                    |         2. cmd KVcxMediaMyVideosInt32Value contains KErrNone if everything went  |
+                    |            OK. If value is != KErrNone, then something went wrong and individual |
+                    |            error codes for array items might not contain values.                 |
+                    |<---------------------------------------------------------------------------------|
+                    |                                                                                  |
+                    | HandleCollectionMessage( CMPXMessage* aMessage, TInt aError )                    |
+                    |                                                                                  |
+                    |  aMessage contains:                                                              |
+                    |      KMPXMessageGeneralId        = KMPXMessageIdItemChanged                      |
+                    |      KMPXMessageChangeEventType  = EMPXItemDeleted                               |
+                    |      KVcxMediaMyVideosInt32Value = EVcxMyVideosListNoInfo                        |
+                    |      KMPXMessageCollectionId     = KVcxUidMyVideosMpxCollection                  |
+                    |      KMPXMessageMediaGeneralId   = MPX ID (ID of the album which was removed)    |
+                    |<---------------------------------------------------------------------------------|
 
 */
 

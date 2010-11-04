@@ -1,0 +1,22 @@
+----------------------------
+ videoconnutility_api tests
+----------------------------
+
+Device must have following APs in the "Internet" destination: 
+ - Internet 
+ - Internet2
+ - Wlan
+ - Wlan2
+ - BadIap <- Doesn't work at all, make copy of a GPRS AP and 
+change access point name to something.
+
+The test PKG file includes cenrep config file which has 
+APs for Tampere CATS, this file is used in ATS3 tests. PKG
+has also TestFramework.ini. Comment these two if you want
+to install tests from SIS.
+
+There's ats_*.txt config files in conf directory for ATS3 
+drop creation. 
+
+Run /vado/video/internal/testing/tools/genATSdrop.pl from 
+the tsrc folder to create ATS3 drop.

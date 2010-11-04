@@ -18,6 +18,9 @@
 #ifndef __VCX_CONNUTIL_H_
 #define __VCX_CONNUTIL_H_
 
+// Deprecation warning
+#warning This header file has been deprecated. Will be removed in one of the next SDK releases.
+
 // INCLUDES
 #include <e32base.h>
 

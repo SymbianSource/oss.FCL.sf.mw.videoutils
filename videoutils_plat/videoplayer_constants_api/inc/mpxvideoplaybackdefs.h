@@ -15,7 +15,7 @@
 */
 
 
-// Version : %version: ou1cpsw#4 %
+// Version : %version: 14 %
 
 
 #ifndef CMPXVIDEOPLAYBACKDEFS_H
@@ -120,7 +120,11 @@ enum TMPXVideoPlaybackCommand
     EPbCmdHandleDecreaseVolume,
     EPbCmdCustomPause,
     EPbCmdCustomPlay,
-    EPbCmdRetrieveBufferingPercentage
+    EPbCmdRetrieveBufferingPercentage,
+    EPbCmdLoadingStarted,
+    EPbCmdHideControls,
+    EPbCmdSetPosterFrame,
+    EPbCmdSurfaceRemovedFromWindow
 };
 
 enum TMPXGeneralError
@@ -129,7 +133,9 @@ enum TMPXGeneralError
     KMPXVideoPlayOver2GDuringVoiceCallError,
     KMPXVideoTvOutPlaybackNotAllowed,
     KMPXVideoTvOutPlaybackNotAllowedClose,
-
+    KMPXVideoSetPosterFrameFailure,
+    KMPXVideoSetPosterFrameSuccess,
+    KMPXVideoSetPosterFrameNotSupported,
     KMPXPluginError
 };
 
@@ -160,13 +166,13 @@ const TMPXAttributeData KMPXMediaVideoDisplayCropRect = { KMPXMediaIdVideoDispla
 //
 const TMPXAttributeData KMPXMediaVideoDisplayAspectRatio = { KMPXMediaIdVideoDisplayMessage, 0x08 };
 
+
 enum TMPXVideoDisplayCommand
 {
     EPbMsgVideoSurfaceCreated,
     EPbMsgVideoSurfaceChanged,
     EPbMsgVideoSurfaceRemoved
 };
-
 
 #endif
 

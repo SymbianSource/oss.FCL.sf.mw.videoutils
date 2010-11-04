@@ -1430,11 +1430,16 @@ void CCseScheduleDB::CompactDb()
     {
     CSELOGSTRING_HIGH_LEVEL(">>>CCseScheduleDB::CompactDb");
     // Compact database
-    TInt err( iScheduleDb.Compact() );
-    if ( err != KErrNone )
+
+    if( iDbAccess != ECseDbLocked )
         {
-        CSELOGSTRING2_HIGH_LEVEL("iScheduleDb.Compact() failed: %d", err);    
+        TInt err( iScheduleDb.Compact() );
+        if ( err != KErrNone )
+            {
+            CSELOGSTRING2_HIGH_LEVEL("iScheduleDb.Compact() failed: %d", err);    
+            }
         }
+    
     // Cancel timer if it is running    
 	if ( iCompactTimer )
 		{
@@ -1463,6 +1468,14 @@ void CCseScheduleDB::ChangeFileLockL(
             {
             // Backup and restore starting, close the db
             CloseDbFile();
+            
+            // Cancel timer if it is running    
+            if ( iCompactTimer )
+                {
+                iCompactTimer->Cancel();
+                delete iCompactTimer;
+                iCompactTimer = NULL;       
+                }
             }
             break;
             

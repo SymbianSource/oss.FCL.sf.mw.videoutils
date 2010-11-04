@@ -18,6 +18,9 @@
 #ifndef _M_CVCX_CONUTILENGINEOBS_H__
 #define _M_CVCX_CONUTILENGINEOBS_H__
 
+// Deprecation warning
+#warning This header file has been deprecated. Will be removed in one of the next SDK releases.
+
 
 // CLASS DECLARATION
 /**

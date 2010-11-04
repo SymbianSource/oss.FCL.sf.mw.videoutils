@@ -1,56 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SystemDefinition schema="3.0.0">
-  <package id="videoutils" name="Video Utils" levels="eng util if">
-    <collection id="dvrengine" name="DVR Engine" level="eng">
-      <component id="commonrecordingengine" filter="s60" name="Common Recording Engine">
-     		<!--  can only have one unit, #include the others from the main nit -->
-        <unit bldFile="dvrengine/commonrecordingengine/group"/>
-        <unit bldFile="dvrengine/commonrecordingengine/dvrrtpcliphandler/group"/>
-        <unit bldFile="dvrengine/commonrecordingengine/dvrrtpcliprecognizer/group"/>
-        <unit bldFile="dvrengine/commonrecordingengine/dvrrtputils/group"/>
-      </component>
-      <component id="commonrecordingengineclient" filter="s60" name="Common Recording Engine Client">
-        <unit bldFile="dvrengine/commonrecordingengineclient/group"/>
-      </component>
-      <component id="dvrengine_build" filter="s60" name="DVR Engine Build">
-      	<!-- should split this into the bld.infs above -->
-        <unit bldFile="dvrengine/group"/>
-      </component>
-    </collection>
-    <collection id="videoconnutility" name="Video Connection Utility" level="util">
-      <component id="connutilpsworker" filter="s60" name="Connection Utility Publish and Subscribe Worker">
-        <unit bldFile="videoconnutility/connutilpsworker/group"/>
-      </component>
-      <component id="videoconnutility_build" filter="s60" name="Video Connection Utility Build">
-        <unit bldFile="videoconnutility/group"/>
-      </component>
-    </collection>
-    <collection id="videoscheduler" name="Video Scheduler" level="util">
-      <component id="schedulerclient" filter="s60" name="Video Scheduler Client">
-        <unit bldFile="videoscheduler/schedulerclient/group"/>
-      </component>
-      <component id="schedulerserver" filter="s60" name="Video Scheduler Server">
-        <unit bldFile="videoscheduler/schedulerserver/group"/>
-      </component>
-      <component id="videoscheduler_build" filter="s60" name="Video Scheduler Build">
-      	<!-- is this needed at all? Can the system include just be put in the above bld.infs? -->
-        <unit bldFile="videoscheduler/group"/>
-      </component>
-    </collection>
-    <collection id="videoutils_info" name="Video Utils Info" level="if">
-      <component id="videoutils_plat" filter="s60" name="Video Utils Platform Interfaces" class="api">
-        <unit bldFile="videoutils_plat/group"/>
-        	<!-- do these test units  need to be #included in the above bld.inf? -->
-        <!-- <unit bldFile="videoutils_plat/videoconnutility_api/tsrc/group"/> -->
-        <!-- <unit bldFile="videoutils_plat/videoconnutility_api/tsrc/vcxconnutiltestexe/group"/> -->
-        <!-- <unit bldFile="videoutils_plat/videoconnutility_api/tsrc/vcxtestcommon/group"/> -->
-        <!-- <unit bldFile="videoutils_plat/videoconnutility_api/tsrc/vcxtestutilmodule/group"/> -->
-        <!-- <unit bldFile="videoutils_plat/videoscheduler_api/tsrc/group"/> -->
-      </component>
-      <component id="videoutils_build" filter="s60" name="Video Utils Build">
-      	<!--  can this be split up into the above components?? -->
-        <unit bldFile="group"/>
-      </component>
-    </collection>
-  </package>
+ <package id="videoutils" name="Video Utils" levels="eng util">
+  <collection id="videoconnutility" name="videoconnutility" level="engine">
+    <component id="connutility" filter="s60" name="connutility" introduced="^3">
+      <unit bldFile="videoconnutility/connutility/group"/>
+    </component> 
+    <component id="connutilpsworker" filter="s60" name="connutilpsworker" introduced="^3">    
+      <unit bldFile="videoconnutility/connutilpsworker/group"/>    
+      </component>  
+  </collection>
+  <collection id="videoscheduler" name="videoscheduler" level="engine">
+    <component id="SchedulerClient" filter="s60" name="SchedulerClient" introduced="^3">
+      <unit bldFile="videoscheduler/SchedulerClient/group"/>
+    </component> 
+    <component id="SchedulerServer" filter="s60" name="SchedulerServer" introduced="^3">    
+      <unit bldFile="videoscheduler/SchedulerServer/group"/>    
+      </component>  
+  </collection>
+  <collection id="videoutils_plat" name="Video Utils Platform Interfaces" level="if">
+   <component id="videoconnutility_api" name="Videoplayer connutility API" class="api" filter="s60">
+    <unit bldFile="videoutils_plat/videoconnutility_api/group"/>
+   </component>
+   <component id="videoplayer_constants_api" name="Videoplayer Constants API" class="api" filter="s60">
+    <!--<meta rel="Api" href="videoutils_plat/videoplayer_constants_api/videoplayer_constants_api.metaxml"/>-->
+    <unit bldFile="videoutils_plat/videoplayer_constants_api/group"/>
+   </component>
+   <component id="videoscheduler_api" name="Videoplayer videoscheduler API" class="api" filter="s60">
+    <unit bldFile="videoutils_plat/videoscheduler_api/group"/>
+   </component>   
+  </collection>
+ </package>
 </SystemDefinition>
